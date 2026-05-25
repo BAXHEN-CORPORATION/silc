@@ -1,0 +1,126 @@
+{
+  "Nav": {
+    "home": "Home",
+    "presencial": "SILC Presencial",
+    "upcoming": "Upcoming Seminars",
+    "past": "Past Seminars",
+    "online": "SILC Online",
+    "about": "About SILC",
+    "contact": "Contact",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "menuLabel": "Navigation menu"
+  },
+  "EventCard": {
+    "upcoming": "● Upcoming",
+    "past": "○ Concluded",
+    "viewDetails": "View details"
+  },
+  "CountryFilter": {
+    "label": "Filter by country:",
+    "all": "All"
+  },
+  "Gallery": {
+    "label": "Photo gallery",
+    "close": "Close",
+    "prev": "Previous photo",
+    "next": "Next photo",
+    "viewPhoto": "View photo: {alt}"
+  },
+  "Home": {
+    "eyebrow": "International Christian Leadership Seminar",
+    "title": "One week that transforms lives forever",
+    "description": "SILC is an intensive week-long residential seminar that deepens your relationship with God through biblical teaching, counselling and intercession. Held in more than 30 countries around the world.",
+    "ctaPresencial": "Attend in person →",
+    "ctaOnline": "Join SILC Online",
+    "statsCountries": "Countries",
+    "statsYears": "Years of history",
+    "statsParticipants": "Participants",
+    "statsOnline": "Available now",
+    "upcomingEyebrow": "SILC Presencial",
+    "upcomingTitle": "Upcoming Seminars",
+    "upcomingDescription": "Find a SILC seminar near you and experience this life-changing week with others.",
+    "upcomingViewAll": "View all upcoming seminars →",
+    "onlineEyebrow": "SILC Online",
+    "onlineTitle": "SILC at your pace, wherever you are",
+    "onlineDescription": "Can't attend a SILC in person? SILC Online delivers the same depth of teaching and spiritual transformation directly to you, with flexibility to fit your schedule.",
+    "onlineCta": "Discover SILC Online →",
+    "onlineQuote": "\"Spiritual transformation without borders\""
+  },
+  "Upcoming": {
+    "eyebrow": "SILC Presencial",
+    "title": "Upcoming Seminars",
+    "emptyWithFilter": "No seminars scheduled in {country} at the moment.",
+    "emptyAll": "No seminars scheduled at the moment. Check back soon!"
+  },
+  "Past": {
+    "eyebrow": "SILC Presencial",
+    "title": "Past Seminars",
+    "yearFilter": "Filter by year:",
+    "all": "All",
+    "empty": "No seminars found with the selected filters."
+  },
+  "EventDetail": {
+    "breadcrumbHome": "Home",
+    "breadcrumbUpcoming": "Upcoming Seminars",
+    "breadcrumbPast": "Past Seminars",
+    "statusUpcoming": "● Upcoming",
+    "statusPast": "○ Concluded",
+    "sectionAbout": "About the event",
+    "sectionSchedule": "How the week works",
+    "sectionPhotos": "Photo gallery",
+    "sectionTestimonials": "Testimonials",
+    "practicalInfo": "Practical information",
+    "dates": "Dates",
+    "location": "Location",
+    "venue": "Venue / Hotel",
+    "price": "Investment",
+    "speaker": "Main Speaker",
+    "registrationTitle": "Registration",
+    "registrationNote": "You will be redirected to the registration form.",
+    "pastNotice": "This seminar has already taken place. See the {link}.",
+    "pastNoticeLink": "upcoming events",
+    "videoTitle": "Video – {title}"
+  },
+  "Online": {
+    "eyebrow": "SILC Online",
+    "title": "Spiritual transformation wherever you are",
+    "description": "SILC Online delivers the depth of the in-person seminar directly to you, with flexibility to participate from anywhere.",
+    "format": "Format",
+    "duration": "Duration",
+    "access": "Access",
+    "global": "Global",
+    "sectionIntro": "What is SILC Online",
+    "sectionHow": "How it works",
+    "sectionIncluded": "What is included",
+    "sectionDiff": "Difference from in-person SILC",
+    "sectionTestimonials": "What participants say",
+    "ctaTitle": "Ready to start?",
+    "ctaNote": "Click below to access the registration form. After submitting, you will receive instructions about the next steps by email.",
+    "ctaLabel": "Register for SILC Online"
+  },
+  "About": {
+    "eyebrow": "About SILC",
+    "title": "What is SILC?",
+    "sectionWeek": "How the week works",
+    "sectionRoles": "Speaker, Counsellors and Intercessors",
+    "ctaUpcoming": "View Upcoming Seminars",
+    "ctaOnline": "SILC Online"
+  },
+  "Contact": {
+    "eyebrow": "Contact",
+    "title": "Get in touch",
+    "formTitle": "Send a message",
+    "emailLabel": "Email",
+    "whatsappLabel": "WhatsApp",
+    "fieldName": "Name *",
+    "fieldEmail": "Email *",
+    "fieldSubject": "Subject",
+    "fieldMessage": "Message *",
+    "placeholderName": "Your full name",
+    "placeholderEmail": "you@email.com",
+    "placeholderSubject": "How can we help?",
+    "placeholderMessage": "Your message...",
+    "submit": "Send message →"
+  }
+}

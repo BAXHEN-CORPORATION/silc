@@ -1,0 +1,126 @@
+{
+  "Nav": {
+    "home": "Início",
+    "presencial": "SILC Presencial",
+    "upcoming": "Próximos Seminários",
+    "past": "Seminários Anteriores",
+    "online": "SILC Online",
+    "about": "Sobre o SILC",
+    "contact": "Contato",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "menuLabel": "Menu de navegação"
+  },
+  "EventCard": {
+    "upcoming": "● Próximo",
+    "past": "○ Encerrado",
+    "viewDetails": "Ver detalhes"
+  },
+  "CountryFilter": {
+    "label": "Filtrar por país:",
+    "all": "Todos"
+  },
+  "Gallery": {
+    "label": "Galeria de fotos",
+    "close": "Fechar",
+    "prev": "Foto anterior",
+    "next": "Próxima foto",
+    "viewPhoto": "Ver foto: {alt}"
+  },
+  "Home": {
+    "eyebrow": "Seminário Internacional de Liderança Cristã",
+    "title": "Uma semana que transforma vidas para sempre",
+    "description": "O SILC é um seminário residencial intensivo de uma semana que aprofunda seu relacionamento com Deus através de ensino bíblico, aconselhamento e intercessão. Realizado em mais de 30 países ao redor do mundo.",
+    "ctaPresencial": "Participar presencialmente →",
+    "ctaOnline": "Fazer o SILC Online",
+    "statsCountries": "Países",
+    "statsYears": "Anos de história",
+    "statsParticipants": "Participantes",
+    "statsOnline": "Disponível agora",
+    "upcomingEyebrow": "SILC Presencial",
+    "upcomingTitle": "Próximos Seminários",
+    "upcomingDescription": "Encontre um SILC presencial perto de você e viva essa experiência transformadora com outras pessoas.",
+    "upcomingViewAll": "Ver todos os próximos seminários →",
+    "onlineEyebrow": "SILC Online",
+    "onlineTitle": "O SILC no seu ritmo, de onde você estiver",
+    "onlineDescription": "Não consegue participar de um SILC presencial? O SILC Online traz a mesma profundidade de ensino e transformação espiritual diretamente para você, com flexibilidade para adaptar à sua agenda.",
+    "onlineCta": "Conhecer o SILC Online →",
+    "onlineQuote": "\"Transformação espiritual sem fronteiras\""
+  },
+  "Upcoming": {
+    "eyebrow": "SILC Presencial",
+    "title": "Próximos Seminários",
+    "emptyWithFilter": "Nenhum seminário agendado em {country} no momento.",
+    "emptyAll": "Nenhum seminário agendado no momento. Volte em breve!"
+  },
+  "Past": {
+    "eyebrow": "SILC Presencial",
+    "title": "Seminários Anteriores",
+    "yearFilter": "Filtrar por ano:",
+    "all": "Todos",
+    "empty": "Nenhum seminário encontrado com os filtros selecionados."
+  },
+  "EventDetail": {
+    "breadcrumbHome": "Início",
+    "breadcrumbUpcoming": "Próximos Seminários",
+    "breadcrumbPast": "Seminários Anteriores",
+    "statusUpcoming": "● Próximo",
+    "statusPast": "○ Encerrado",
+    "sectionAbout": "Sobre o evento",
+    "sectionSchedule": "Como é a semana",
+    "sectionPhotos": "Galeria de fotos",
+    "sectionTestimonials": "Depoimentos",
+    "practicalInfo": "Informações práticas",
+    "dates": "Datas",
+    "location": "Local",
+    "venue": "Local / Hotel",
+    "price": "Investimento",
+    "speaker": "Preletor Principal",
+    "registrationTitle": "Inscrição",
+    "registrationNote": "Você será direcionado ao formulário de inscrição.",
+    "pastNotice": "Este seminário já foi realizado. Veja os {link}.",
+    "pastNoticeLink": "próximos eventos",
+    "videoTitle": "Vídeo – {title}"
+  },
+  "Online": {
+    "eyebrow": "SILC Online",
+    "title": "Transformação espiritual onde você estiver",
+    "description": "O SILC Online leva a profundidade do seminário presencial diretamente para você, com flexibilidade para participar de onde quiser.",
+    "format": "Formato",
+    "duration": "Duração",
+    "access": "Acesso",
+    "global": "Global",
+    "sectionIntro": "O que é o SILC Online",
+    "sectionHow": "Como funciona",
+    "sectionIncluded": "O que está incluído",
+    "sectionDiff": "Diferença do SILC presencial",
+    "sectionTestimonials": "O que dizem os participantes",
+    "ctaTitle": "Pronto para começar?",
+    "ctaNote": "Clique abaixo para acessar o formulário de inscrição. Após o envio, você receberá as instruções sobre os próximos passos por e-mail.",
+    "ctaLabel": "Inscrever-se no SILC Online"
+  },
+  "About": {
+    "eyebrow": "Sobre o SILC",
+    "title": "O que é o SILC?",
+    "sectionWeek": "Como funciona a semana",
+    "sectionRoles": "Preletor, Conselheiros e Intercessores",
+    "ctaUpcoming": "Ver Próximos Seminários",
+    "ctaOnline": "SILC Online"
+  },
+  "Contact": {
+    "eyebrow": "Contato",
+    "title": "Fale com a equipe",
+    "formTitle": "Envie uma mensagem",
+    "emailLabel": "E-mail",
+    "whatsappLabel": "WhatsApp",
+    "fieldName": "Nome *",
+    "fieldEmail": "E-mail *",
+    "fieldSubject": "Assunto",
+    "fieldMessage": "Mensagem *",
+    "placeholderName": "Seu nome completo",
+    "placeholderEmail": "seu@email.com",
+    "placeholderSubject": "Como podemos ajudar?",
+    "placeholderMessage": "Sua mensagem...",
+    "submit": "Enviar mensagem →"
+  }
+}

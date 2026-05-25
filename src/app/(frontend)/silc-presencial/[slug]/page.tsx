@@ -1,0 +1,226 @@
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+import { getEventBySlug } from '@/application/queries/getEvents'
+import { RegistrationCTA } from '@/components/RegistrationCTA'
+import PhotoGallery from '@/components/PhotoGallery'
+import TestimonialList from '@/components/TestimonialList'
+import RichTextRenderer from '@/components/RichTextRenderer'
+import { Badge } from '@/components/ui/badge'
+import { Card, CardContent } from '@/components/ui/card'
+import { Separator } from '@/components/ui/separator'
+
+interface Props {
+  params: Promise<{ slug: string }>
+}
+
+export async function generateMetadata({ params }: Props) {
+  const { slug } = await params
+  const event = await getEventBySlug(slug).catch(() => null)
+  if (!event) return {}
+  return {
+    title: `${event.title} – SILC`,
+    description: event.shortDescription ?? undefined,
+  }
+}
+
+function formatDate(date: string) {
+  return new Date(date).toLocaleDateString('pt-BR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
+export default async function EventDetailPage({ params }: Props) {
+  const { slug } = await params
+  const event = await getEventBySlug(slug).catch(() => null)
+
+  if (!event) notFound()
+
+  const isUpcoming = event.status === 'upcoming'
+  const photos = (event.photos ?? []) as Array<{
+    photo: { url: string; alt: string; width?: number; height?: number }
+    caption?: string
+  }>
+  const testimonials = ((event.testimonials ?? []) as Array<{ id: string; name: string; quote: string }>)
+
+  return (
+    <>
+      {/* Hero */}
+      <section className="bg-[#1a2c4e] px-6 py-16">
+        <div className="mx-auto max-w-[1200px]">
+          {/* Breadcrumb */}
+          <nav className="mb-8 flex items-center gap-2 text-xs text-white/50">
+            <Link href="/" className="hover:text-[#c9a84c] transition-colors">Início</Link>
+            <span>/</span>
+            <Link
+              href={`/silc-presencial/${isUpcoming ? 'proximos-seminarios' : 'seminarios-anteriores'}`}
+              className="hover:text-[#c9a84c] transition-colors"
+            >
+              {isUpcoming ? 'Próximos Seminários' : 'Seminários Anteriores'}
+            </Link>
+            <span>/</span>
+            <span className="text-white/70">{event.title}</span>
+          </nav>
+
+          <Badge
+            className={isUpcoming
+              ? 'bg-[#c9a84c] text-[#1a2c4e] hover:bg-[#c9a84c] mb-4'
+              : 'bg-white/10 text-white/70 hover:bg-white/10 mb-4'
+            }
+          >
+            {isUpcoming ? '● Próximo' : '○ Encerrado'}
+          </Badge>
+
+          <h1 className="font-serif text-3xl font-bold text-white sm:text-4xl md:text-5xl">
+            {event.title}
+          </h1>
+
+          <div className="mt-6 flex flex-wrap gap-6">
+            <span className="flex items-center gap-2 text-sm text-white/70">
+              <span>📍</span>
+              {event.city}, {event.country}
+            </span>
+            <span className="flex items-center gap-2 text-sm text-white/70">
+              <span>📅</span>
+              {formatDate(event.startDate as string)} – {formatDate(event.endDate as string)}
+            </span>
+            {event.mainSpeaker && (
+              <span className="flex items-center gap-2 text-sm text-white/70">
+                <span>🎤</span>
+                {event.mainSpeaker}
+              </span>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Body */}
+      <div className="mx-auto grid max-w-[1200px] gap-10 px-6 py-16 md:grid-cols-[1fr_320px]">
+        {/* Main content */}
+        <div className="flex flex-col gap-12">
+          {Boolean(event.description) && (
+            <section>
+              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">Sobre o evento</h2>
+              <RichTextRenderer content={event.description} />
+            </section>
+          )}
+
+          {Boolean(event.scheduleOverview) && (
+            <section>
+              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">Como é a semana</h2>
+              <RichTextRenderer content={event.scheduleOverview} />
+            </section>
+          )}
+
+          {photos.length > 0 && (
+            <section>
+              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">Galeria de fotos</h2>
+              <PhotoGallery photos={photos} />
+            </section>
+          )}
+
+          {testimonials.length > 0 && (
+            <section>
+              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">Depoimentos</h2>
+              <TestimonialList testimonials={testimonials} />
+            </section>
+          )}
+        </div>
+
+        {/* Sidebar */}
+        <aside className="flex flex-col gap-6">
+          <Card>
+            <CardContent className="p-6">
+              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#c9a84c]">
+                Informações práticas
+              </p>
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-xs font-medium uppercase text-gray-400">Datas</span>
+                  <span className="text-sm text-[#1a2c4e]">
+                    {formatDate(event.startDate as string)} – {formatDate(event.endDate as string)}
+                  </span>
+                </div>
+                <Separator />
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-xs font-medium uppercase text-gray-400">Local</span>
+                  <span className="text-sm text-[#1a2c4e]">{event.city}, {event.country}</span>
+                </div>
+                {event.venue && (
+                  <>
+                    <Separator />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-xs font-medium uppercase text-gray-400">Local / Hotel</span>
+                      <span className="text-sm text-[#1a2c4e]">{event.venue}</span>
+                    </div>
+                  </>
+                )}
+                {event.price && (
+                  <>
+                    <Separator />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-xs font-medium uppercase text-gray-400">Investimento</span>
+                      <span className="text-sm text-[#1a2c4e]">{event.price}</span>
+                    </div>
+                  </>
+                )}
+                {event.mainSpeaker && (
+                  <>
+                    <Separator />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-xs font-medium uppercase text-gray-400">Preletor Principal</span>
+                      <span className="text-sm text-[#1a2c4e]">{event.mainSpeaker}</span>
+                    </div>
+                  </>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {isUpcoming && event.registrationFormUrl ? (
+            <Card>
+              <CardContent className="p-6">
+                <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#c9a84c]">
+                  Inscrição
+                </p>
+                <div className="flex flex-col gap-3">
+                  <RegistrationCTA href={event.registrationFormUrl as string} />
+                  <p className="text-center text-[0.7rem] text-gray-400">
+                    Você será direcionado ao formulário de inscrição.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          ) : !isUpcoming ? (
+            <div className="rounded-lg border border-gray-100 bg-gray-50 p-4 text-sm text-gray-600">
+              Este seminário já foi realizado. Veja os{' '}
+              <Link
+                href="/silc-presencial/proximos-seminarios"
+                className="font-semibold text-[#1a2c4e] hover:text-[#c9a84c]"
+              >
+                próximos eventos
+              </Link>
+              .
+            </div>
+          ) : null}
+        </aside>
+      </div>
+
+      {/* Video section */}
+      {event.videoUrl && (
+        <div className="mx-auto mb-16 max-w-[1200px] px-6">
+          <div className="relative aspect-video overflow-hidden rounded-xl">
+            <iframe
+              src={event.videoUrl as string}
+              allowFullScreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              title={`Vídeo – ${event.title}`}
+              className="absolute inset-0 size-full"
+            />
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
