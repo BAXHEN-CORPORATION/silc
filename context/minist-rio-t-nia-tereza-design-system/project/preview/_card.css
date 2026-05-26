@@ -1,0 +1,33 @@
+/* Preview-card shared CSS — these are tiny specimens rendered in
+   the Design System tab. They must each fit ~700×<=400. */
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  background: var(--bg-1);
+  color: var(--fg-0);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+.card {
+  padding: 22px 24px;
+  min-height: 100%;
+}
+.row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.col { display: flex; flex-direction: column; gap: 8px; }
+.label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.14em; color: var(--fg-3); font-weight: 600; }
+.mono { font-family: var(--font-mono); font-size: 11px; color: var(--fg-3); }
+
+/* swatch */
+.sw {
+  display: flex; flex-direction: column;
+  width: 96px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--line-1);
+  background: var(--bg-2);
+}
+.sw__chip { height: 64px; }
+.sw__meta { padding: 8px 10px; }
+.sw__name { font-size: 12px; font-weight: 600; color: var(--fg-0); }
+.sw__hex  { font-family: var(--font-mono); font-size: 10px; color: var(--fg-3); margin-top: 2px; }

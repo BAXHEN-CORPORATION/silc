@@ -4,6 +4,7 @@ import { getMessages, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
 import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
 import '../../(frontend)/globals.css'
 
 export function generateStaticParams() {
@@ -11,8 +12,8 @@ export function generateStaticParams() {
 }
 
 export const metadata = {
-  description: 'SILC – Seminário Internacional de Liderança Cristã. Seminários presenciais e online ao redor do mundo.',
-  title: 'SILC – Seminar International',
+  description: 'SILC – Seminário Intensivo de Cura e Libertação. Seminários presenciais e online ao redor do mundo.',
+  title: 'SILC – Seminário Intensivo de Cura e Libertação',
 }
 
 interface Props {
@@ -35,7 +36,9 @@ export default async function RootLayout({ children, params }: Props) {
       <body suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <Navbar />
-          <main>{children}</main>
+          {/* Offset for fixed nav (72px height at rest) */}
+          <main className="pt-[72px]">{children}</main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

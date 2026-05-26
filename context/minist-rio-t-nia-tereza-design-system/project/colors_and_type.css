@@ -1,0 +1,290 @@
+/* ===========================================================
+   Ministério Tânia Tereza — Colors & Type
+   Derived from the SILC legacy landing page (dark theme).
+   =========================================================== */
+
+/* ------- Webfonts (Google Fonts substitute) ----------------- */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  /* -----------------------------------------------------------
+     COLORS
+     The site reads as a deep, almost-black canvas with a single
+     hot-red accent (CTAs, headlines, marker dots) and a soft
+     lavender used for inline icon chips. A second background
+     "blue panel" appears as a section separator.
+     ----------------------------------------------------------- */
+
+  /* Neutrals — surfaces */
+  --bg-0:        #000000;   /* deepest, page edge bands */
+  --bg-1:        #0B0B0E;   /* primary canvas */
+  --bg-2:        #15151A;   /* raised card / event poster well */
+  --bg-3:        #1E1E25;   /* button-on-dark, input fill */
+  --bg-panel:    #1B2A3F;   /* "Testemunhos" deep-blue band */
+  --bg-overlay:  rgba(0,0,0,0.55);  /* hero scrim over photo */
+
+  /* Neutrals — ink */
+  --fg-0:        #FFFFFF;   /* primary text on dark */
+  --fg-1:        #E7E8EC;
+  --fg-2:        #B6BAC4;   /* paragraph copy */
+  --fg-3:        #8A8F9B;   /* meta, caption */
+  --fg-muted:    #5A5F6A;   /* disabled, hairline label */
+
+  /* Borders / dividers */
+  --line-1:      rgba(255,255,255,0.08);
+  --line-2:      rgba(255,255,255,0.16);
+  --line-strong: rgba(255,255,255,0.32);
+
+  /* Brand — RED (the SILC heart-in-hand red) */
+  --red-50:      #FFE9E9;
+  --red-100:     #FFC9C9;
+  --red-300:     #FF7878;
+  --red-500:     #ED3A3A;   /* PRIMARY brand red — buttons, headlines */
+  --red-600:     #D62828;   /* hover */
+  --red-700:     #B11C1C;   /* pressed */
+  --red-deep:    #8B1414;   /* logo gradient bottom */
+
+  /* Brand — supporting lavender (icon chips, "checked" markers) */
+  --lavender-300: #C7B6FA;
+  --lavender-400: #B7A3F5;  /* the checkbox squares on legacy */
+  --lavender-600: #8F77E0;
+
+  /* Semantic */
+  --success:     #3FB37F;
+  --warning:     #E2A93A;
+  --danger:      #ED3A3A;   /* same as red-500 */
+  --info:        #4A89DC;
+
+  /* Pills / status (e.g., "INSCRIÇÕES ENCERRADAS" stamp) */
+  --stamp-red:   #C9242B;
+  --pill-tint:   rgba(237, 58, 58, 0.12);
+
+  /* ------- TYPE -------------------------------------------- */
+
+  /* Families */
+  --font-sans:    'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;     /* the legacy headings are heavy geometric sans */
+  --font-serif:   'Playfair Display', Georgia, 'Times New Roman', serif;  /* the "Pra. TÂNIA Tereza" video banner uses a high-contrast serif */
+  --font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Sizes — fluid type ramp */
+  --fs-hero:      clamp(40px, 5.5vw, 76px);  /* "Tânia Tereza" hero */
+  --fs-h1:        clamp(32px, 3.6vw, 52px);  /* section titles */
+  --fs-h2:        28px;
+  --fs-h3:        22px;
+  --fs-h4:        18px;
+  --fs-lead:      18px;
+  --fs-body:      16px;
+  --fs-sm:        14px;
+  --fs-xs:        12px;
+  --fs-eyebrow:   13px;   /* "PRÓXIMOS SEMINÁRIOS" caps label */
+
+  /* Weights */
+  --fw-regular:   400;
+  --fw-medium:    500;
+  --fw-semibold:  600;
+  --fw-bold:      700;
+  --fw-black:     800;
+
+  /* Line heights */
+  --lh-tight:     1.05;
+  --lh-snug:      1.2;
+  --lh-normal:    1.45;
+  --lh-relaxed:   1.6;
+
+  /* Letter spacing */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.08em;
+  --tracking-caps:   0.14em;   /* "PRÓXIMOS SEMINÁRIOS", etc. */
+
+  /* ------- SHAPE / SPACING / ELEVATION --------------------- */
+
+  --radius-xs:    4px;
+  --radius-sm:    8px;
+  --radius-md:    12px;
+  --radius-lg:    16px;
+  --radius-xl:    24px;
+  --radius-pill:  999px;       /* the legacy CTA buttons are full pill */
+  --radius-photo: 50%;         /* the hero portrait is a full circle w/ red ring */
+
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+
+  /* Shadows — dark UI uses very soft shadows; lift mostly comes from background contrast */
+  --shadow-1: 0 1px 2px rgba(0,0,0,0.4);
+  --shadow-2: 0 6px 16px rgba(0,0,0,0.45);
+  --shadow-3: 0 18px 40px rgba(0,0,0,0.55);
+  --ring-red: 0 0 0 3px rgba(237, 58, 58, 0.35);    /* CTA focus */
+  --ring-photo: 0 0 0 4px var(--red-500);            /* hero portrait ring */
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --t-fast: 140ms;
+  --t-base: 220ms;
+  --t-slow: 420ms;
+
+  /* -----------------------------------------------------------
+     MKP-DERIVED COMPONENT TOKENS
+     Material Kit Pro is a Material-Bootstrap hybrid; its
+     signature is colored "umbra" shadows lifting cards & buttons.
+     We re-tune those shadows for a DARK canvas — the brand red
+     becomes the shadow color on primary CTAs.
+     ----------------------------------------------------------- */
+
+  /* MKP button radius (3px default, 30px "round", 0 "link") */
+  --mkp-radius-btn:        3px;
+  --mkp-radius-btn-round:  30px;
+  --mkp-radius-card:       6px;
+  --mkp-radius-main:       6px;
+
+  /* MKP button paddings */
+  --mkp-pad-btn:           12px 30px;
+  --mkp-pad-btn-lg:        18px 36px;
+  --mkp-pad-btn-sm:        7px 20px;
+
+  /* MKP button font (uppercase, 12px, weight 400, NO letter-spacing) */
+  --mkp-btn-size:          12px;
+  --mkp-btn-size-lg:       14px;
+  --mkp-btn-size-sm:       11px;
+  --mkp-btn-weight:        500;          /* slight bump on dark for legibility */
+  --mkp-btn-transform:     uppercase;
+  --mkp-btn-tracking:      0.03em;
+
+  /* Colored "umbra" shadows — the signature MKP look,
+     re-keyed to the brand red on a dark canvas. */
+  --shadow-mkp-base:
+    0 2px 2px 0 rgba(0,0,0,0.32),
+    0 3px 1px -2px rgba(0,0,0,0.42),
+    0 1px 5px 0  rgba(0,0,0,0.26);
+  --shadow-mkp-hover:
+    0 14px 26px -12px rgba(0,0,0,0.62),
+    0 4px 23px 0px   rgba(0,0,0,0.40),
+    0 8px 10px -5px  rgba(0,0,0,0.34);
+
+  --shadow-mkp-red:
+    0 2px 2px 0 rgba(237,58,58,0.32),
+    0 3px 1px -2px rgba(237,58,58,0.42),
+    0 1px 5px 0  rgba(237,58,58,0.26);
+  --shadow-mkp-red-hover:
+    0 14px 26px -12px rgba(237,58,58,0.62),
+    0 4px 23px 0px    rgba(0,0,0,0.40),
+    0 8px 10px -5px   rgba(237,58,58,0.34);
+
+  --shadow-mkp-card:
+    0 16px 24px 2px rgba(0,0,0,0.30),
+    0 6px 30px 5px  rgba(0,0,0,0.22),
+    0 8px 10px -5px rgba(0,0,0,0.40);
+
+  /* "Colored shadow under card image" — MKP's signature
+     glow behind profile/blog card images. */
+  --shadow-mkp-image:
+    0 10px 30px -8px rgba(0,0,0,0.65),
+    0 4px 25px 0px    rgba(0,0,0,0.40),
+    0 8px 10px -5px   rgba(0,0,0,0.45);
+
+  /* "Main raised" — body content panel lifted off the page */
+  --shadow-mkp-main:
+    0 16px 38px -12px rgba(0,0,0,0.66),
+    0 4px 25px 0px    rgba(0,0,0,0.30),
+    0 8px 10px -5px   rgba(0,0,0,0.46);
+  --main-raised-overlap: -60px;   /* MKP lifts main by 60px */
+  --main-raised-bg:      var(--bg-1);
+}
+
+/* ===========================================================
+   SEMANTIC ELEMENT DEFAULTS
+   =========================================================== */
+
+html, body {
+  background: var(--bg-1);
+  color: var(--fg-0);
+  font-family: var(--font-sans);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.eyebrow {
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--fg-0);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-hero);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tracking-tight);
+}
+.hero-kicker {
+  font-size: var(--fs-h3);
+  color: var(--red-500);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tracking-tight);
+}
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tracking-tight);
+  margin: 0;
+}
+h2, .h2 { font-size: var(--fs-h2); font-weight: var(--fw-bold); line-height: var(--lh-snug); margin: 0; }
+h3, .h3 { font-size: var(--fs-h3); font-weight: var(--fw-semibold); line-height: var(--lh-snug); margin: 0; }
+h4, .h4 { font-size: var(--fs-h4); font-weight: var(--fw-semibold); margin: 0; }
+
+p, .body {
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-2);
+  margin: 0;
+}
+.lead {
+  font-size: var(--fs-lead);
+  color: var(--fg-2);
+  line-height: var(--lh-relaxed);
+}
+small, .caption {
+  font-size: var(--fs-sm);
+  color: var(--fg-3);
+}
+.meta {
+  font-size: var(--fs-xs);
+  color: var(--fg-3);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+}
+code, kbd, samp {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+a {
+  color: var(--fg-0);
+  text-decoration: none;
+  transition: color var(--t-fast) var(--ease-out);
+}
+a:hover { color: var(--red-500); }
+
+::selection { background: var(--red-500); color: #fff; }

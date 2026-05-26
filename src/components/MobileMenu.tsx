@@ -24,39 +24,53 @@ export default function MobileMenu() {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
       >
-        <span className={`block h-0.5 w-6 bg-white transition-all duration-200 ${open ? 'translate-y-2 rotate-45' : ''}`} />
-        <span className={`block h-0.5 w-6 bg-white transition-all duration-200 ${open ? 'opacity-0' : ''}`} />
-        <span className={`block h-0.5 w-6 bg-white transition-all duration-200 ${open ? '-translate-y-2 -rotate-45' : ''}`} />
+        <span className={`block h-0.5 w-5 bg-white transition-all duration-200 ${open ? 'translate-y-2 rotate-45' : ''}`} />
+        <span className={`block h-0.5 w-5 bg-white transition-all duration-200 ${open ? 'opacity-0' : ''}`} />
+        <span className={`block h-0.5 w-5 bg-white transition-all duration-200 ${open ? '-translate-y-2 -rotate-45' : ''}`} />
       </button>
 
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent side="right" className="w-72 bg-[#1a2c4e] border-0 p-0">
+        <SheetContent
+          side="right"
+          className="w-72 p-0"
+          style={{ background: '#0B0B0E', border: 'none', borderLeft: '1px solid rgba(255,255,255,0.08)' }}
+        >
           <SheetTitle className="sr-only">{t('menuLabel')}</SheetTitle>
           <nav className="flex flex-col gap-1 px-6 pt-8">
             <Link
               href="/"
               onClick={close}
-              className="py-3 text-base font-medium text-white/80 border-b border-white/10 hover:text-[#c9a84c] transition-colors"
+              className="py-3 text-base font-medium border-b"
+              style={{ color: 'var(--fg-1)', borderColor: 'var(--line-1)' }}
             >
               {t('home')}
             </Link>
 
-            <div className="py-3 border-b border-white/10">
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#c9a84c]">
+            <div className="py-3 border-b" style={{ borderColor: 'var(--line-1)' }}>
+              <span
+                className="text-xs font-medium tracking-widest uppercase"
+                style={{ fontFamily: 'var(--font-mono)', color: 'var(--fg-3)' }}
+              >
                 {t('presencial')}
               </span>
               <div className="mt-2 flex flex-col gap-1">
                 <Link
                   href="/silc-presencial/proximos-seminarios"
                   onClick={close}
-                  className="py-2 pl-3 text-sm text-white/70 hover:text-[#c9a84c] transition-colors"
+                  className="py-2 pl-3 text-sm transition-colors"
+                  style={{ color: 'var(--fg-2)' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--red-500)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'var(--fg-2)')}
                 >
                   {t('upcoming')}
                 </Link>
                 <Link
                   href="/silc-presencial/seminarios-anteriores"
                   onClick={close}
-                  className="py-2 pl-3 text-sm text-white/70 hover:text-[#c9a84c] transition-colors"
+                  className="py-2 pl-3 text-sm transition-colors"
+                  style={{ color: 'var(--fg-2)' }}
+                  onMouseEnter={e => (e.currentTarget.style.color = 'var(--red-500)')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'var(--fg-2)')}
                 >
                   {t('past')}
                 </Link>
@@ -66,7 +80,8 @@ export default function MobileMenu() {
             <Link
               href="/silc-online"
               onClick={close}
-              className="py-3 text-base font-medium text-white/80 border-b border-white/10 hover:text-[#c9a84c] transition-colors"
+              className="py-3 text-base font-medium border-b transition-colors"
+              style={{ color: 'var(--fg-1)', borderColor: 'var(--line-1)' }}
             >
               {t('online')}
             </Link>
@@ -74,7 +89,8 @@ export default function MobileMenu() {
             <Link
               href="/sobre-o-silc"
               onClick={close}
-              className="py-3 text-base font-medium text-white/80 border-b border-white/10 hover:text-[#c9a84c] transition-colors"
+              className="py-3 text-base font-medium border-b transition-colors"
+              style={{ color: 'var(--fg-1)', borderColor: 'var(--line-1)' }}
             >
               {t('about')}
             </Link>
@@ -82,9 +98,19 @@ export default function MobileMenu() {
             <Link
               href="/contato"
               onClick={close}
-              className="mt-4 rounded-md border border-[#c9a84c] py-2.5 text-center text-sm font-medium text-[#c9a84c] hover:bg-[#c9a84c] hover:text-[#1a2c4e] transition-colors"
+              className="py-3 text-base font-medium border-b transition-colors"
+              style={{ color: 'var(--fg-1)', borderColor: 'var(--line-1)' }}
             >
               {t('contact')}
+            </Link>
+
+            <Link
+              href="/silc-presencial/proximos-seminarios"
+              onClick={close}
+              className="mt-6 rounded-lg py-3 text-center text-sm font-semibold"
+              style={{ background: 'var(--red-500)', color: '#fff' }}
+            >
+              {t('cta')}
             </Link>
           </nav>
         </SheetContent>
