@@ -170,7 +170,13 @@
     "sectionWeek": "How the week works",
     "sectionRoles": "Speaker, Counsellors and Intercessors",
     "ctaUpcoming": "View Upcoming Seminars",
-    "ctaOnline": "SILC Online"
+    "ctaOnline": "SILC Online",
+    "h2Week": "The week, in five movements.",
+    "h2Roles": "Who ministers with you.",
+    "ctaEyebrow": "Next step",
+    "ctaTitle": "Want to participate?",
+    "ctaPresencialCta": "View schedule",
+    "ctaOnlineCta": "Learn more"
   },
   "Contact": {
     "eyebrow": "Contact",

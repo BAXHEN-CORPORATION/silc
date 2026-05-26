@@ -22,61 +22,87 @@ export default async function AboutPage({ params }: Props) {
 
   return (
     <>
-      <section className="bg-[#1a2c4e] px-6 py-20">
-        <div className="mx-auto max-w-[1200px]">
-          <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.2em] text-[#c9a84c]">
-            {t('eyebrow')}
-          </span>
-          <h1 className="font-serif text-4xl font-bold text-white sm:text-5xl">{t('title')}</h1>
+      {/* ── HERO ── */}
+      <section style={{ padding: '180px 0 60px' }}>
+        <div className="container" style={{ maxWidth: 880 }}>
+          <span className="eyebrow">{t('eyebrow')}</span>
+          <h1 className="display" style={{ marginTop: 20 }}>
+            {locale === 'en' ? (
+              <>
+                What is <span className="red-italic">SILC</span>.
+              </>
+            ) : (
+              <>
+                O que é o <span className="red-italic">SILC</span>.
+              </>
+            )}
+          </h1>
+          {Boolean(content?.intro) && (
+            <div style={{ marginTop: 28 }}>
+              <RichTextRenderer content={content!.intro} />
+            </div>
+          )}
         </div>
       </section>
 
-      <div className="mx-auto max-w-[800px] px-6 py-16">
-        {Boolean(content?.intro) && (
-          <section className="mb-12">
-            <RichTextRenderer content={content!.intro} />
-          </section>
-        )}
-
-        {Boolean(content?.howTheWeekWorks) && (
-          <section className="mb-12">
-            <div className="mb-2 h-0.5 w-12 bg-[#c9a84c]" aria-hidden="true" />
-            <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">{t('sectionWeek')}</h2>
-            <RichTextRenderer content={content!.howTheWeekWorks} />
-          </section>
-        )}
-
-        {Boolean(content?.roles) && (
-          <section className="mb-12">
-            <div className="mb-2 h-0.5 w-12 bg-[#c9a84c]" aria-hidden="true" />
-            <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">{t('sectionRoles')}</h2>
-            <RichTextRenderer content={content!.roles} />
-          </section>
-        )}
-
-        <div className="mt-16 grid gap-4 sm:grid-cols-2">
-          <Link
-            href="/silc-presencial/proximos-seminarios"
-            className="flex items-center justify-between rounded-xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">📅</span>
-              <span className="font-semibold text-[#1a2c4e]">{t('ctaUpcoming')}</span>
+      {/* ── HOW THE WEEK WORKS ── */}
+      {Boolean(content?.howTheWeekWorks) && (
+        <section className="evd-section">
+          <div className="container">
+            <div className="evd-grid-aux">
+              <div>
+                <div className="evd-label">{t('sectionWeek')}</div>
+                <h2 className="h2" style={{ marginTop: 12 }}>
+                  {t('h2Week')}
+                </h2>
+              </div>
+              <RichTextRenderer content={content!.howTheWeekWorks} />
             </div>
-            <span className="text-[#c9a84c]">→</span>
-          </Link>
-          <Link
-            href="/silc-online"
-            className="flex items-center justify-between rounded-xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">💻</span>
-              <span className="font-semibold text-[#1a2c4e]">{t('ctaOnline')}</span>
+          </div>
+        </section>
+      )}
+
+      {/* ── TEAM ROLES ── */}
+      {Boolean(content?.roles) && (
+        <section className="evd-section">
+          <div className="container">
+            <div className="evd-grid-aux">
+              <div>
+                <div className="evd-label">{t('sectionRoles')}</div>
+                <h2 className="h2" style={{ marginTop: 12 }}>
+                  {t('h2Roles')}
+                </h2>
+              </div>
+              <RichTextRenderer content={content!.roles} />
             </div>
-            <span className="text-[#c9a84c]">→</span>
-          </Link>
+          </div>
+        </section>
+      )}
+
+      {/* ── CTA PATH CARDS ── */}
+      <section className="section">
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <span className="eyebrow eyebrow--plain">{t('ctaEyebrow')}</span>
+            <h2
+              className="display"
+              style={{ marginTop: 20, fontSize: 'clamp(36px,4.6vw,64px)' }}
+            >
+              {t('ctaTitle')}
+            </h2>
+          </div>
+          <div className="path-cards" style={{ maxWidth: 920, margin: '0 auto' }}>
+            <Link href="/silc-presencial/proximos-seminarios" className="path-card is-primary">
+              <div className="path-card__title">{t('ctaUpcoming')}</div>
+              <span className="path-card__cta">{t('ctaPresencialCta')} →</span>
+            </Link>
+            <Link href="/silc-online" className="path-card">
+              <div className="path-card__title">{t('ctaOnline')}</div>
+              <span className="path-card__cta">{t('ctaOnlineCta')} →</span>
+            </Link>
+          </div>
         </div>
-      </div>
+      </section>
     </>
   )
 }
