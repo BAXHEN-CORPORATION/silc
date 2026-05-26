@@ -8,7 +8,7 @@
     "about": "About SILC",
     "contact": "Contact",
     "brandSubLine1": "Intensive Seminar on",
-    "brandSubLine2": "Healing and Deliverance",
+    "brandSubLine2": "Deliverance and Healing",
     "brandAriaLabel": "SILC – Home page",
     "upcomingDesc": "Upcoming events list, filterable by country",
     "pastDesc": "Archive of past editions with photos",
@@ -34,7 +34,7 @@
     "viewPhoto": "View photo: {alt}"
   },
   "Home": {
-    "heroSince": "INTENSIVE SEMINAR ON HEALING AND DELIVERANCE · SINCE 1995",
+    "heroSince": "INTENSIVE SEMINAR ON DELIVERANCE AND HEALING · SINCE 1995",
     "heroTitle": "Five days that will <accent>transform</accent> your life in Christ.",
     "heroLead": "SILC is an intensive seminar — in-person or online — where God breaks cycles, restores families and heals deep wounds. Over 100,000 people have already participated.",
     "heroPathPresencialKind": "Path A · In-Person",
@@ -90,7 +90,7 @@
     "onlineQuote": "\"Spiritual transformation without borders\""
   },
   "Footer": {
-    "byline": "Intensive Seminar on Healing and Deliverance — founded by Pastor Tânia Tereza, based in Brazil, ministered around the world.",
+    "byline": "Intensive Seminar on Deliverance and Healing — founded by Pastor Tânia Tereza, based in Brazil, ministered around the world.",
     "tagline": "Five days that will change a life.",
     "presencial": "SILC Presencial",
     "upcoming": "Upcoming Seminars",
@@ -135,7 +135,17 @@
     "registrationTitle": "Registration",
     "registrationNote": "You will be redirected to the registration form.",
     "pastNotice": "This seminar has already taken place. See the <link>upcoming events</link>.",
-    "videoTitle": "Video – {title}"
+    "videoTitle": "Video – {title}",
+    "eyebrowUpcoming": "Next seminar · Registration open",
+    "eyebrowPast": "Edition closed",
+    "h2Week": "What happens during SILC.",
+    "h2Info": "Where, when, how much.",
+    "h2Gallery": "Photos from {title}.",
+    "h2Registration": "Reserve your spot.",
+    "ctaRegister": "Sign up now",
+    "ctaVideo": "Watch video",
+    "ctaNextSilcs": "See upcoming SILCs",
+    "ctaGallery": "Go to gallery"
   },
   "Online": {
     "eyebrow": "SILC Online",

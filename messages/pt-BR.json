@@ -135,7 +135,17 @@
     "registrationTitle": "Inscrição",
     "registrationNote": "Você será direcionado ao formulário de inscrição.",
     "pastNotice": "Este seminário já foi realizado. Veja os <link>próximos eventos</link>.",
-    "videoTitle": "Vídeo – {title}"
+    "videoTitle": "Vídeo – {title}",
+    "eyebrowUpcoming": "Próximo seminário · Inscrições abertas",
+    "eyebrowPast": "Edição encerrada",
+    "h2Week": "O que acontece durante o SILC.",
+    "h2Info": "Onde, quando, quanto.",
+    "h2Gallery": "Fotos do {title}.",
+    "h2Registration": "Reserve a sua vaga.",
+    "ctaRegister": "Inscreva-se agora",
+    "ctaVideo": "Ver vídeo",
+    "ctaNextSilcs": "Ver próximos SILCs",
+    "ctaGallery": "Ir para a galeria"
   },
   "Online": {
     "eyebrow": "SILC Online",

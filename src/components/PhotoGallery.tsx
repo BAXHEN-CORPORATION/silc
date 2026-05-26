@@ -44,7 +44,9 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
 
   useEffect(() => {
     document.body.style.overflow = active !== null ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    return () => {
+      document.body.style.overflow = ''
+    }
   }, [active])
 
   if (!photos.length) return null
@@ -53,28 +55,15 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <div className="gallery">
         {photos.map((item, i) => (
           <button
             key={i}
-            className="group relative aspect-[4/3] overflow-hidden rounded-lg bg-gray-100 cursor-pointer"
+            className={`gallery__cell${i === 0 ? ' is-wide' : ''}`}
+            style={{ backgroundImage: `url(${item.photo.url})` }}
             onClick={() => setActive(i)}
             aria-label={t('viewPhoto', { alt: item.photo.alt })}
-          >
-            <Image
-              src={item.photo.url}
-              alt={item.photo.alt}
-              fill
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              style={{ objectFit: 'cover' }}
-              className="transition-transform duration-300 group-hover:scale-105"
-            />
-            {item.caption && (
-              <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 to-transparent p-3 opacity-0 transition-opacity group-hover:opacity-100">
-                <p className="text-xs text-white">{item.caption}</p>
-              </div>
-            )}
-          </button>
+          />
         ))}
       </div>
 
@@ -115,7 +104,10 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
           </button>
           <button
             className="absolute left-4 top-1/2 -translate-y-1/2 flex size-12 items-center justify-center rounded-full bg-white/10 text-white text-2xl hover:bg-white/20 transition-colors disabled:opacity-30"
-            onClick={(e) => { e.stopPropagation(); prev() }}
+            onClick={(e) => {
+              e.stopPropagation()
+              prev()
+            }}
             disabled={active === 0}
             aria-label={t('prev')}
           >
@@ -123,7 +115,10 @@ export default function PhotoGallery({ photos }: PhotoGalleryProps) {
           </button>
           <button
             className="absolute right-4 top-1/2 -translate-y-1/2 flex size-12 items-center justify-center rounded-full bg-white/10 text-white text-2xl hover:bg-white/20 transition-colors disabled:opacity-30"
-            onClick={(e) => { e.stopPropagation(); next() }}
+            onClick={(e) => {
+              e.stopPropagation()
+              next()
+            }}
             disabled={active === photos.length - 1}
             aria-label={t('next')}
           >

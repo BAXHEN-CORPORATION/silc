@@ -1,14 +1,14 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getEventBySlug } from '@/application/queries/getEvents'
 import { RegistrationCTA } from '@/components/RegistrationCTA'
 import PhotoGallery from '@/components/PhotoGallery'
 import TestimonialList from '@/components/TestimonialList'
 import RichTextRenderer from '@/components/RichTextRenderer'
-import { Badge } from '@/components/ui/badge'
-import { Card, CardContent } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
-import { setRequestLocale } from 'next-intl/server'
+
+const FALLBACK_PHOTO =
+  'https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=1200&q=70'
 
 interface Props {
   params: Promise<{ slug: string; locale: string }>
@@ -16,9 +16,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { slug, locale } = await params
-
   setRequestLocale(locale)
-
   const event = await getEventBySlug(slug, locale).catch(() => null)
   if (!event) return {}
   return {
@@ -37,10 +35,10 @@ function formatDate(date: string) {
 
 export default async function EventDetailPage({ params }: Props) {
   const { slug, locale } = await params
-
   setRequestLocale(locale)
-  const event = await getEventBySlug(slug, locale).catch(() => null)
+  const t = await getTranslations('EventDetail')
 
+  const event = await getEventBySlug(slug, locale).catch(() => null)
   if (!event) notFound()
 
   const isUpcoming = event.status === 'upcoming'
@@ -54,199 +52,230 @@ export default async function EventDetailPage({ params }: Props) {
     quote: string
   }>
 
+  const startDate = formatDate(event.startDate as string)
+  const endDate = formatDate(event.endDate as string)
+  const dateRange = `${startDate} – ${endDate}`
+  const heroPhoto = photos[0]?.photo?.url ?? FALLBACK_PHOTO
+
   return (
     <>
-      {/* Hero */}
-      <section className="bg-[#1a2c4e] px-6 py-16">
-        <div className="mx-auto max-w-[1200px]">
-          {/* Breadcrumb */}
-          <nav className="mb-8 flex items-center gap-2 text-xs text-white/50">
-            <Link href="/" className="hover:text-[#c9a84c] transition-colors">
-              Início
-            </Link>
-            <span>/</span>
-            <Link
-              href={`/silc-presencial/${isUpcoming ? 'proximos-seminarios' : 'seminarios-anteriores'}`}
-              className="hover:text-[#c9a84c] transition-colors"
-            >
-              {isUpcoming ? 'Próximos Seminários' : 'Seminários Anteriores'}
-            </Link>
-            <span>/</span>
-            <span className="text-white/70">{event.title}</span>
-          </nav>
-
-          <Badge
-            className={
-              isUpcoming
-                ? 'bg-[#c9a84c] text-[#1a2c4e] hover:bg-[#c9a84c] mb-4'
-                : 'bg-white/10 text-white/70 hover:bg-white/10 mb-4'
-            }
-          >
-            {isUpcoming ? '● Próximo' : '○ Encerrado'}
-          </Badge>
-
-          <h1 className="font-serif text-3xl font-bold text-white sm:text-4xl md:text-5xl">
-            {event.title}
-          </h1>
-
-          <div className="mt-6 flex flex-wrap gap-6">
-            <span className="flex items-center gap-2 text-sm text-white/70">
-              <span>📍</span>
-              {event.city}, {event.country}
-            </span>
-            <span className="flex items-center gap-2 text-sm text-white/70">
-              <span>📅</span>
-              {formatDate(event.startDate as string)} – {formatDate(event.endDate as string)}
-            </span>
-            {event.mainSpeaker && (
-              <span className="flex items-center gap-2 text-sm text-white/70">
-                <span>🎤</span>
-                {event.mainSpeaker}
+      {/* ── HERO ── */}
+      <section className="evd-hero">
+        <div className="container">
+          <div className="evd-hero__row">
+            <div>
+              <span className="eyebrow">
+                {isUpcoming ? t('eyebrowUpcoming') : t('eyebrowPast')}
               </span>
-            )}
+              <h1 className="display evd-hero__title">{event.title}</h1>
+              <div className="evd-hero__where">
+                <strong>
+                  {event.city}, {event.country}
+                </strong>{' '}
+                · {dateRange}
+              </div>
+              <div className="evd-hero__cta">
+                {isUpcoming ? (
+                  <>
+                    {event.registrationFormUrl && (
+                      <a href="#inscricao" className="btn">
+                        {t('ctaRegister')} →
+                      </a>
+                    )}
+                    {event.videoUrl && (
+                      <a href="#video" className="btn btn--ghost">
+                        ▶ {t('ctaVideo')}
+                      </a>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/silc-presencial/proximos-seminarios"
+                      className="btn btn--ghost"
+                    >
+                      {t('ctaNextSilcs')} →
+                    </Link>
+                    {photos.length > 0 && (
+                      <a href="#photos" className="btn btn--link">
+                        {t('ctaGallery')}
+                      </a>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div
+              className="evd-hero__photo"
+              style={{ backgroundImage: `url(${heroPhoto})` }}
+              role="img"
+              aria-label={event.title}
+            />
           </div>
         </div>
       </section>
 
-      {/* Body */}
-      <div className="mx-auto grid max-w-[1200px] gap-10 px-6 py-16 md:grid-cols-[1fr_320px]">
-        {/* Main content */}
-        <div className="flex flex-col gap-12">
-          {Boolean(event.description) && (
-            <section>
-              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">
-                Sobre o evento
-              </h2>
-              <RichTextRenderer content={event.description} />
-            </section>
-          )}
-
-          {Boolean(event.scheduleOverview) && (
-            <section>
-              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">
-                Como é a semana
-              </h2>
-              <RichTextRenderer content={event.scheduleOverview} />
-            </section>
-          )}
-
-          {photos.length > 0 && (
-            <section>
-              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">
-                Galeria de fotos
-              </h2>
-              <PhotoGallery photos={photos} />
-            </section>
-          )}
-
-          {testimonials.length > 0 && (
-            <section>
-              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">Depoimentos</h2>
-              <TestimonialList testimonials={testimonials} />
-            </section>
-          )}
-        </div>
-
-        {/* Sidebar */}
-        <aside className="flex flex-col gap-6">
-          <Card>
-            <CardContent className="p-6">
-              <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#c9a84c]">
-                Informações práticas
-              </p>
-              <div className="flex flex-col gap-3">
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-xs font-medium uppercase text-gray-400">Datas</span>
-                  <span className="text-sm text-[#1a2c4e]">
-                    {formatDate(event.startDate as string)} – {formatDate(event.endDate as string)}
-                  </span>
-                </div>
-                <Separator />
-                <div className="flex flex-col gap-0.5">
-                  <span className="text-xs font-medium uppercase text-gray-400">Local</span>
-                  <span className="text-sm text-[#1a2c4e]">
-                    {event.city}, {event.country}
-                  </span>
-                </div>
-                {event.venue && (
-                  <>
-                    <Separator />
-                    <div className="flex flex-col gap-0.5">
-                      <span className="text-xs font-medium uppercase text-gray-400">
-                        Local / Hotel
-                      </span>
-                      <span className="text-sm text-[#1a2c4e]">{event.venue}</span>
-                    </div>
-                  </>
-                )}
-                {event.price && (
-                  <>
-                    <Separator />
-                    <div className="flex flex-col gap-0.5">
-                      <span className="text-xs font-medium uppercase text-gray-400">
-                        Investimento
-                      </span>
-                      <span className="text-sm text-[#1a2c4e]">{event.price}</span>
-                    </div>
-                  </>
-                )}
-                {event.mainSpeaker && (
-                  <>
-                    <Separator />
-                    <div className="flex flex-col gap-0.5">
-                      <span className="text-xs font-medium uppercase text-gray-400">
-                        Preletor Principal
-                      </span>
-                      <span className="text-sm text-[#1a2c4e]">{event.mainSpeaker}</span>
-                    </div>
-                  </>
-                )}
+      {/* ── DESCRIPTION ── */}
+      {Boolean(event.description) && (
+        <section className="evd-section">
+          <div className="container">
+            <div className="evd-grid-aux">
+              <div>
+                <div className="evd-label">{t('sectionAbout')}</div>
               </div>
-            </CardContent>
-          </Card>
-
-          {isUpcoming && event.registrationFormUrl ? (
-            <Card>
-              <CardContent className="p-6">
-                <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-[#c9a84c]">
-                  Inscrição
-                </p>
-                <div className="flex flex-col gap-3">
-                  <RegistrationCTA href={event.registrationFormUrl as string} />
-                  <p className="text-center text-[0.7rem] text-gray-400">
-                    Você será direcionado ao formulário de inscrição.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          ) : !isUpcoming ? (
-            <div className="rounded-lg border border-gray-100 bg-gray-50 p-4 text-sm text-gray-600">
-              Este seminário já foi realizado. Veja os{' '}
-              <Link
-                href="/silc-presencial/proximos-seminarios"
-                className="font-semibold text-[#1a2c4e] hover:text-[#c9a84c]"
-              >
-                próximos eventos
-              </Link>
-              .
+              <RichTextRenderer content={event.description} />
             </div>
-          ) : null}
-        </aside>
-      </div>
+          </div>
+        </section>
+      )}
 
-      {/* Video section */}
-      {event.videoUrl && (
-        <div className="mx-auto mb-16 max-w-[1200px] px-6">
-          <div className="relative aspect-video overflow-hidden rounded-xl">
-            <iframe
-              src={event.videoUrl as string}
-              allowFullScreen
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              title={`Vídeo – ${event.title}`}
-              className="absolute inset-0 size-full"
-            />
+      {/* ── SCHEDULE ── */}
+      {Boolean(event.scheduleOverview) && (
+        <section className="evd-section">
+          <div className="container">
+            <div className="evd-grid-aux">
+              <div>
+                <div className="evd-label">{t('sectionSchedule')}</div>
+                <h2 className="h2" style={{ marginTop: 12 }}>
+                  {t('h2Week')}
+                </h2>
+              </div>
+              <RichTextRenderer content={event.scheduleOverview} />
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── PRACTICAL INFO ── */}
+      <section className="evd-section">
+        <div className="container">
+          <div className="evd-grid-aux">
+            <div>
+              <div className="evd-label">{t('practicalInfo')}</div>
+              <h2 className="h2" style={{ marginTop: 12 }}>
+                {t('h2Info')}
+              </h2>
+            </div>
+            <div className="spec-list">
+              <div>
+                <span className="spec-list__label">{t('dates')}</span>
+                <span className="spec-list__value">{dateRange}</span>
+              </div>
+              <div>
+                <span className="spec-list__label">{t('location')}</span>
+                <span className="spec-list__value">
+                  {event.city}, {event.country}
+                </span>
+              </div>
+              {event.venue && (
+                <div>
+                  <span className="spec-list__label">{t('venue')}</span>
+                  <span className="spec-list__value">{event.venue as string}</span>
+                </div>
+              )}
+              {event.price && (
+                <div>
+                  <span className="spec-list__label">{t('price')}</span>
+                  <span className="spec-list__value">{event.price as string}</span>
+                </div>
+              )}
+              {event.mainSpeaker && (
+                <div>
+                  <span className="spec-list__label">{t('speaker')}</span>
+                  <span className="spec-list__value">{event.mainSpeaker as string}</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
+      </section>
+
+      {/* ── GALLERY ── */}
+      {photos.length > 0 && (
+        <section className="evd-section" id="photos">
+          <div className="container">
+            <div className="evd-grid-aux" style={{ marginBottom: 32 }}>
+              <div>
+                <div className="evd-label">{t('sectionPhotos')}</div>
+                <h2 className="h2" style={{ marginTop: 12 }}>
+                  {t('h2Gallery', { title: event.title })}
+                </h2>
+              </div>
+            </div>
+            <PhotoGallery photos={photos} />
+          </div>
+        </section>
+      )}
+
+      {/* ── TESTIMONIALS ── */}
+      {testimonials.length > 0 && (
+        <section className="evd-section">
+          <div className="container">
+            <div style={{ marginBottom: 40 }}>
+              <span className="eyebrow">{t('sectionTestimonials')}</span>
+            </div>
+            <TestimonialList testimonials={testimonials} />
+          </div>
+        </section>
+      )}
+
+      {/* ── REGISTRATION ── */}
+      {isUpcoming && event.registrationFormUrl && (
+        <section className="evd-section" id="inscricao">
+          <div className="container">
+            <div className="evd-grid-aux">
+              <div>
+                <div className="evd-label">{t('registrationTitle')}</div>
+                <h2 className="h2" style={{ marginTop: 12 }}>
+                  {t('h2Registration')}
+                </h2>
+                <p className="body" style={{ marginTop: 16, maxWidth: '30ch' }}>
+                  {t('registrationNote')}
+                </p>
+              </div>
+              <div>
+                <RegistrationCTA href={event.registrationFormUrl as string} />
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── PAST NOTICE ── */}
+      {!isUpcoming && (
+        <section className="evd-section">
+          <div className="container">
+            <div className="evd-grid-aux">
+              <div>
+                <div className="evd-label">{t('registrationTitle')}</div>
+              </div>
+              <div className="detail-past">
+                {t.rich('pastNotice', {
+                  link: (chunks) => (
+                    <Link href="/silc-presencial/proximos-seminarios">{chunks}</Link>
+                  ),
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── VIDEO ── */}
+      {event.videoUrl && (
+        <section className="evd-section" id="video">
+          <div className="container">
+            <div className="detail-video__embed">
+              <iframe
+                src={event.videoUrl as string}
+                allowFullScreen
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                title={t('videoTitle', { title: event.title })}
+              />
+            </div>
+          </div>
+        </section>
       )}
     </>
   )
