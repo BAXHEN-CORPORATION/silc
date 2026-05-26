@@ -36,8 +36,10 @@ function formatDate(date: string) {
 }
 
 export default async function EventDetailPage({ params }: Props) {
-  const { slug } = await params
-  const event = await getEventBySlug(slug).catch(() => null)
+  const { slug, locale } = await params
+
+  setRequestLocale(locale)
+  const event = await getEventBySlug(slug, locale).catch(() => null)
 
   if (!event) notFound()
 
