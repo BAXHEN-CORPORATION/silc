@@ -8,14 +8,18 @@ import RichTextRenderer from '@/components/RichTextRenderer'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { setRequestLocale } from 'next-intl/server'
 
 interface Props {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string; locale: string }>
 }
 
 export async function generateMetadata({ params }: Props) {
-  const { slug } = await params
-  const event = await getEventBySlug(slug).catch(() => null)
+  const { slug, locale } = await params
+
+  setRequestLocale(locale)
+
+  const event = await getEventBySlug(slug, locale).catch(() => null)
   if (!event) return {}
   return {
     title: `${event.title} – SILC`,
@@ -42,7 +46,11 @@ export default async function EventDetailPage({ params }: Props) {
     photo: { url: string; alt: string; width?: number; height?: number }
     caption?: string
   }>
-  const testimonials = ((event.testimonials ?? []) as Array<{ id: string; name: string; quote: string }>)
+  const testimonials = (event.testimonials ?? []) as Array<{
+    id: string
+    name: string
+    quote: string
+  }>
 
   return (
     <>
@@ -51,7 +59,9 @@ export default async function EventDetailPage({ params }: Props) {
         <div className="mx-auto max-w-[1200px]">
           {/* Breadcrumb */}
           <nav className="mb-8 flex items-center gap-2 text-xs text-white/50">
-            <Link href="/" className="hover:text-[#c9a84c] transition-colors">Início</Link>
+            <Link href="/" className="hover:text-[#c9a84c] transition-colors">
+              Início
+            </Link>
             <span>/</span>
             <Link
               href={`/silc-presencial/${isUpcoming ? 'proximos-seminarios' : 'seminarios-anteriores'}`}
@@ -64,9 +74,10 @@ export default async function EventDetailPage({ params }: Props) {
           </nav>
 
           <Badge
-            className={isUpcoming
-              ? 'bg-[#c9a84c] text-[#1a2c4e] hover:bg-[#c9a84c] mb-4'
-              : 'bg-white/10 text-white/70 hover:bg-white/10 mb-4'
+            className={
+              isUpcoming
+                ? 'bg-[#c9a84c] text-[#1a2c4e] hover:bg-[#c9a84c] mb-4'
+                : 'bg-white/10 text-white/70 hover:bg-white/10 mb-4'
             }
           >
             {isUpcoming ? '● Próximo' : '○ Encerrado'}
@@ -101,21 +112,27 @@ export default async function EventDetailPage({ params }: Props) {
         <div className="flex flex-col gap-12">
           {Boolean(event.description) && (
             <section>
-              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">Sobre o evento</h2>
+              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">
+                Sobre o evento
+              </h2>
               <RichTextRenderer content={event.description} />
             </section>
           )}
 
           {Boolean(event.scheduleOverview) && (
             <section>
-              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">Como é a semana</h2>
+              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">
+                Como é a semana
+              </h2>
               <RichTextRenderer content={event.scheduleOverview} />
             </section>
           )}
 
           {photos.length > 0 && (
             <section>
-              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">Galeria de fotos</h2>
+              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">
+                Galeria de fotos
+              </h2>
               <PhotoGallery photos={photos} />
             </section>
           )}
@@ -145,13 +162,17 @@ export default async function EventDetailPage({ params }: Props) {
                 <Separator />
                 <div className="flex flex-col gap-0.5">
                   <span className="text-xs font-medium uppercase text-gray-400">Local</span>
-                  <span className="text-sm text-[#1a2c4e]">{event.city}, {event.country}</span>
+                  <span className="text-sm text-[#1a2c4e]">
+                    {event.city}, {event.country}
+                  </span>
                 </div>
                 {event.venue && (
                   <>
                     <Separator />
                     <div className="flex flex-col gap-0.5">
-                      <span className="text-xs font-medium uppercase text-gray-400">Local / Hotel</span>
+                      <span className="text-xs font-medium uppercase text-gray-400">
+                        Local / Hotel
+                      </span>
                       <span className="text-sm text-[#1a2c4e]">{event.venue}</span>
                     </div>
                   </>
@@ -160,7 +181,9 @@ export default async function EventDetailPage({ params }: Props) {
                   <>
                     <Separator />
                     <div className="flex flex-col gap-0.5">
-                      <span className="text-xs font-medium uppercase text-gray-400">Investimento</span>
+                      <span className="text-xs font-medium uppercase text-gray-400">
+                        Investimento
+                      </span>
                       <span className="text-sm text-[#1a2c4e]">{event.price}</span>
                     </div>
                   </>
@@ -169,7 +192,9 @@ export default async function EventDetailPage({ params }: Props) {
                   <>
                     <Separator />
                     <div className="flex flex-col gap-0.5">
-                      <span className="text-xs font-medium uppercase text-gray-400">Preletor Principal</span>
+                      <span className="text-xs font-medium uppercase text-gray-400">
+                        Preletor Principal
+                      </span>
                       <span className="text-sm text-[#1a2c4e]">{event.mainSpeaker}</span>
                     </div>
                   </>
