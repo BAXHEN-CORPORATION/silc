@@ -1,13 +1,13 @@
 import { Suspense } from 'react'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getPastEvents, getPastEventYears, getPastEventCountries } from '@/application/queries/getEvents'
-import EventCard from '@/components/EventCard'
+import { Link } from '@/i18n/navigation'
+import { getPastEvents, getPastEventCountries } from '@/application/queries/getEvents'
 import CountryFilter from '@/components/CountryFilter'
-import { cn } from '@/lib/utils'
+import type { SilcEvent } from '@/domain/events/types'
 
 interface Props {
   params: Promise<{ locale: string }>
-  searchParams: Promise<{ year?: string; country?: string }>
+  searchParams: Promise<{ country?: string }>
 }
 
 export async function generateMetadata({ params }: Props) {
@@ -16,91 +16,121 @@ export async function generateMetadata({ params }: Props) {
   return { title: `${t('title')} – SILC` }
 }
 
+const FALLBACK_THUMB = 'https://images.unsplash.com/photo-1519834785169-98be25ec3f84?w=400&q=50'
+
+function formatMonthYear(dateStr: string, locale: string): string {
+  const d = new Date(dateStr)
+  return d.toLocaleDateString(locale === 'pt-BR' ? 'pt-BR' : 'en', {
+    month: 'short',
+    year: 'numeric',
+  })
+}
+
+function groupByYear(events: SilcEvent[]): { year: number; items: SilcEvent[] }[] {
+  const map = new Map<number, SilcEvent[]>()
+  for (const e of events) {
+    const y = new Date(e.startDate).getFullYear()
+    if (!map.has(y)) map.set(y, [])
+    map.get(y)!.push(e)
+  }
+  return [...map.entries()]
+    .map(([year, items]) => ({ year, items }))
+    .sort((a, b) => b.year - a.year)
+}
+
 export default async function PastPage({ params, searchParams }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
-  const { year: yearStr, country } = await searchParams
-  const year = yearStr ? parseInt(yearStr, 10) : undefined
+  const { country } = await searchParams
   const t = await getTranslations('Past')
 
-  const [events, years, countries] = await Promise.all([
-    getPastEvents(locale, year, country).catch(() => []),
-    getPastEventYears(locale).catch(() => []),
+  const [events, countries] = await Promise.all([
+    getPastEvents(locale, undefined, country).catch(() => []),
     getPastEventCountries(locale).catch(() => []),
   ])
 
+  const groups = groupByYear(events)
+
   return (
-    <div className="mx-auto max-w-[1200px] px-6 py-16">
-      <header className="mb-10">
-        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#c9a84c]">
-          {t('eyebrow')}
-        </span>
-        <h1 className="mt-2 font-serif text-4xl font-bold text-[#1a2c4e]">{t('title')}</h1>
-      </header>
+    <>
+      {/* Page hero */}
+      <section className="page-hero">
+        <div className="container">
+          <div className="eyebrow">{t('eyebrow')}</div>
+          <h1
+            className="h2"
+            style={{
+              marginTop: 20,
+              fontSize: 'clamp(32px,4vw,52px)',
+              fontWeight: 800,
+              letterSpacing: '-0.03em',
+            }}
+          >
+            {t('title')}
+          </h1>
+          <p className="lead page-hero__lead">
+            {locale === 'pt-BR'
+              ? 'Encontre o SILC que você participou. Veja datas, cidade e galeria de fotos da edição.'
+              : 'Find the SILC you attended. See dates, city, and photo gallery for each edition.'}
+          </p>
 
-      {years.length > 0 && (
-        <div className="mb-6 flex flex-wrap items-center gap-3">
-          <span className="text-sm font-medium text-gray-600">{t('yearFilter')}</span>
-          <div className="flex flex-wrap gap-2">
-            <a
-              href="?"
-              className={cn(
-                'rounded-full px-4 py-1.5 text-sm font-medium transition-colors border',
-                !year
-                  ? 'bg-[#1a2c4e] text-white border-[#1a2c4e]'
-                  : 'border-gray-200 text-gray-600 hover:border-[#1a2c4e] hover:text-[#1a2c4e]',
-              )}
-            >
-              {t('all')}
-            </a>
-            {years.map((y) => (
-              <a
-                key={y}
-                href={`?year=${y}${country ? `&country=${country}` : ''}`}
-                className={cn(
-                  'rounded-full px-4 py-1.5 text-sm font-medium transition-colors border',
-                  year === y
-                    ? 'bg-[#1a2c4e] text-white border-[#1a2c4e]'
-                    : 'border-gray-200 text-gray-600 hover:border-[#1a2c4e] hover:text-[#1a2c4e]',
-                )}
-              >
-                {y}
-              </a>
-            ))}
-          </div>
+          {/* Toolbar inside hero */}
+          {countries.length > 0 && (
+            <div className="events-toolbar" style={{ marginTop: 48, marginBottom: 0 }}>
+              <Suspense>
+                <CountryFilter countries={countries} selectedCountry={country} />
+              </Suspense>
+            </div>
+          )}
         </div>
-      )}
+      </section>
 
-      {countries.length > 0 && (
-        <div className="mb-8">
-          <Suspense>
-            <CountryFilter countries={countries} selectedCountry={country} />
-          </Suspense>
+      {/* Archive groups */}
+      <section style={{ paddingBottom: 80 }}>
+        <div className="container">
+          {groups.length > 0 ? (
+            groups.map(({ year: y, items }) => (
+              <div key={y} className="archive-year">
+                <div className="archive-year__num">{y}</div>
+                <div className="archive-year__list">
+                  {items.map((event) => {
+                    const thumb = event.photos?.[0]?.photo?.url ?? FALLBACK_THUMB
+                    const dateStr = formatMonthYear(event.startDate, locale)
+                    return (
+                      <Link
+                        key={event.id}
+                        href={`/silc-presencial/${event.slug}#photos`}
+                        className="archive-card"
+                      >
+                        <div
+                          className="archive-card__thumb"
+                          style={{ backgroundImage: `url(${thumb})` }}
+                        />
+                        <div className="archive-card__body">
+                          <div className="archive-card__where">{event.city}</div>
+                          <div className="archive-card__date">{dateStr}</div>
+                          <span className="archive-card__link">
+                            {locale === 'pt-BR' ? 'Ver fotos' : 'View photos'} →
+                          </span>
+                        </div>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div style={{ textAlign: 'center', padding: '96px 0', color: 'var(--fg-3)' }}>
+              <div style={{ fontSize: 48, marginBottom: 24 }} aria-hidden="true">
+                📷
+              </div>
+              <p style={{ maxWidth: 400, margin: '0 auto', fontSize: 16, lineHeight: 1.6 }}>
+                {t('empty')}
+              </p>
+            </div>
+          )}
         </div>
-      )}
-
-      {events.length > 0 ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-testid="past-events-grid">
-          {events.map((event) => (
-            <EventCard
-              key={event.id}
-              title={event.title}
-              slug={event.slug as string}
-              city={event.city}
-              country={event.country}
-              startDate={event.startDate as string}
-              endDate={event.endDate as string}
-              shortDescription={event.shortDescription}
-              status="past"
-            />
-          ))}
-        </div>
-      ) : (
-        <div className="flex flex-col items-center gap-4 py-24 text-center text-gray-500">
-          <span className="text-5xl" aria-hidden="true">📷</span>
-          <p className="max-w-sm text-base">{t('empty')}</p>
-        </div>
-      )}
-    </div>
+      </section>
+    </>
   )
 }

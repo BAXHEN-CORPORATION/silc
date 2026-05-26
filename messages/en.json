@@ -134,8 +134,7 @@
     "speaker": "Main Speaker",
     "registrationTitle": "Registration",
     "registrationNote": "You will be redirected to the registration form.",
-    "pastNotice": "This seminar has already taken place. See the {link}.",
-    "pastNoticeLink": "upcoming events",
+    "pastNotice": "This seminar has already taken place. See the <link>upcoming events</link>.",
     "videoTitle": "Video – {title}"
   },
   "Online": {

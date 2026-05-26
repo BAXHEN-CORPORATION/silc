@@ -134,8 +134,7 @@
     "speaker": "Preletor Principal",
     "registrationTitle": "Inscrição",
     "registrationNote": "Você será direcionado ao formulário de inscrição.",
-    "pastNotice": "Este seminário já foi realizado. Veja os {link}.",
-    "pastNoticeLink": "próximos eventos",
+    "pastNotice": "Este seminário já foi realizado. Veja os <link>próximos eventos</link>.",
     "videoTitle": "Vídeo – {title}"
   },
   "Online": {

@@ -113,7 +113,7 @@ export default async function EventDetailPage({ params }: Props) {
             </section>
           )}
           {photos.length > 0 && (
-            <section>
+            <section id="photos">
               <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">{t('sectionPhotos')}</h2>
               <PhotoGallery photos={photos} />
             </section>
