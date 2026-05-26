@@ -16,7 +16,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { slug, locale } = await params
-  const event = await getEventBySlug(slug).catch(() => null)
+  const event = await getEventBySlug(slug, locale).catch(() => null)
   if (!event) return {}
   return {
     title: `${event.title} – SILC`,
@@ -37,7 +37,7 @@ export default async function EventDetailPage({ params }: Props) {
   setRequestLocale(locale)
   const t = await getTranslations('EventDetail')
 
-  const event = await getEventBySlug(slug).catch(() => null)
+  const event = await getEventBySlug(slug, locale).catch(() => null)
   if (!event) notFound()
 
   const isUpcoming = event.status === 'upcoming'

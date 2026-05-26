@@ -18,20 +18,20 @@ interface ContactContent {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function findGlobal<T>(slug: string, depth = 1): Promise<T> {
+async function findGlobal<T>(slug: string, locale: string, depth = 1): Promise<T> {
   const payload = await getPayload({ config: configPromise })
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (payload as any).findGlobal({ slug, depth }) as Promise<T>
+  return (payload as any).findGlobal({ slug, depth, locale }) as Promise<T>
 }
 
-export async function getOnlineContent(): Promise<OnlineContent> {
-  return findGlobal<OnlineContent>('online-content', 2)
+export async function getOnlineContent(locale: string): Promise<OnlineContent> {
+  return findGlobal<OnlineContent>('online-content', locale, 2)
 }
 
-export async function getAboutContent(): Promise<AboutContent> {
-  return findGlobal<AboutContent>('about-content', 1)
+export async function getAboutContent(locale: string): Promise<AboutContent> {
+  return findGlobal<AboutContent>('about-content', locale, 1)
 }
 
-export async function getContactContent(): Promise<ContactContent> {
-  return findGlobal<ContactContent>('contact-content', 1)
+export async function getContactContent(locale: string): Promise<ContactContent> {
+  return findGlobal<ContactContent>('contact-content', locale, 1)
 }

@@ -1,6 +1,8 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { en } from '@payloadcms/translations/languages/en'
+import { pt } from '@payloadcms/translations/languages/pt'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -26,6 +28,14 @@ export default buildConfig({
   },
   collections: [Users, Media, Events, Testimonials],
   globals: [OnlineContent, AboutContent, ContactContent],
+  localization: {
+    locales: [
+      { label: 'Português (Brasil)', code: 'pt-BR' },
+      { label: 'English', code: 'en' },
+    ],
+    defaultLocale: 'pt-BR',
+    fallback: true,
+  },
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -36,6 +46,10 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
+  i18n: {
+    fallbackLanguage: 'pt',
+    supportedLanguages: { pt, en },
+  },
   sharp,
   plugins: [
     s3Storage({

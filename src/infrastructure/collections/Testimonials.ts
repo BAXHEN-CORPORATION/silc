@@ -22,6 +22,7 @@ export const Testimonials: CollectionConfig = {
       name: 'quote',
       type: 'textarea',
       required: true,
+      localized: true,
     },
     {
       name: 'eventType',

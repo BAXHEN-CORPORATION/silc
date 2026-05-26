@@ -18,7 +18,7 @@ export default async function AboutPage({ params }: Props) {
   setRequestLocale(locale)
   const t = await getTranslations('About')
 
-  const content = await getAboutContent().catch(() => null)
+  const content = await getAboutContent(locale).catch(() => null)
 
   return (
     <>

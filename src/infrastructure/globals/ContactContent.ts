@@ -22,6 +22,7 @@ export const ContactContent: GlobalConfig = {
       name: 'intro',
       type: 'richText',
       label: 'Contact Page Intro',
+      localized: true,
     },
   ],
 }

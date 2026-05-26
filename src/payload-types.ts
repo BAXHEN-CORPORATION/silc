@@ -90,7 +90,7 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('pt-BR' | 'en') | ('pt-BR' | 'en')[];
   globals: {
     'online-content': OnlineContent;
     'about-content': AboutContent;
@@ -101,7 +101,7 @@ export interface Config {
     'about-content': AboutContentSelect<false> | AboutContentSelect<true>;
     'contact-content': ContactContentSelect<false> | ContactContentSelect<true>;
   };
-  locale: null;
+  locale: 'pt-BR' | 'en';
   widgets: {
     collections: CollectionsWidget;
   };

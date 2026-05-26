@@ -20,7 +20,7 @@ export default async function ContactPage({ params }: Props) {
   setRequestLocale(locale)
   const t = await getTranslations('Contact')
 
-  const content = await getContactContent().catch(() => null)
+  const content = await getContactContent(locale).catch(() => null)
 
   return (
     <>

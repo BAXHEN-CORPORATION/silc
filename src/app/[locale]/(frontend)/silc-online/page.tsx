@@ -19,7 +19,7 @@ export default async function SilcOnlinePage({ params }: Props) {
   setRequestLocale(locale)
   const t = await getTranslations('Online')
 
-  const content = await getOnlineContent().catch(() => null)
+  const content = await getOnlineContent(locale).catch(() => null)
   const testimonials = ((content?.testimonials ?? []) as Array<{ id: string; name: string; quote: string }>)
 
   const sections = [

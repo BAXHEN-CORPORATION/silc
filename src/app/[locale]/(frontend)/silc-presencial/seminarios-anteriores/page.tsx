@@ -24,9 +24,9 @@ export default async function PastPage({ params, searchParams }: Props) {
   const t = await getTranslations('Past')
 
   const [events, years, countries] = await Promise.all([
-    getPastEvents(year, country).catch(() => []),
-    getPastEventYears().catch(() => []),
-    getPastEventCountries().catch(() => []),
+    getPastEvents(locale, year, country).catch(() => []),
+    getPastEventYears(locale).catch(() => []),
+    getPastEventCountries(locale).catch(() => []),
   ])
 
   return (

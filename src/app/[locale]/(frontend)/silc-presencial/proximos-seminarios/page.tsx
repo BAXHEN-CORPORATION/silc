@@ -22,8 +22,8 @@ export default async function UpcomingPage({ params, searchParams }: Props) {
   const t = await getTranslations('Upcoming')
 
   const [events, countries] = await Promise.all([
-    getUpcomingEvents(country).catch(() => []),
-    getUpcomingEventCountries().catch(() => []),
+    getUpcomingEvents(locale, country).catch(() => []),
+    getUpcomingEventCountries(locale).catch(() => []),
   ])
 
   return (

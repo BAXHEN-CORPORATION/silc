@@ -33,6 +33,7 @@ export const Events: CollectionConfig = {
       name: 'title',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'slug',
@@ -82,6 +83,7 @@ export const Events: CollectionConfig = {
     {
       name: 'shortDescription',
       type: 'text',
+      localized: true,
       admin: {
         description: 'Brief summary shown in event cards.',
       },
@@ -90,6 +92,7 @@ export const Events: CollectionConfig = {
       name: 'description',
       type: 'richText',
       label: 'Full Description',
+      localized: true,
     },
     {
       name: 'mainSpeaker',
@@ -100,6 +103,7 @@ export const Events: CollectionConfig = {
       name: 'scheduleOverview',
       type: 'richText',
       label: 'Schedule Overview',
+      localized: true,
     },
     {
       name: 'price',
@@ -137,6 +141,7 @@ export const Events: CollectionConfig = {
         {
           name: 'caption',
           type: 'text',
+          localized: true,
         },
       ],
     },

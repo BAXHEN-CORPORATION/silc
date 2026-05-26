@@ -12,7 +12,7 @@ export default async function HomePage({ params }: Props) {
   setRequestLocale(locale)
 
   const t = await getTranslations('Home')
-  const upcomingEvents = await getUpcomingEvents().catch(() => [])
+  const upcomingEvents = await getUpcomingEvents(locale).catch(() => [])
   const nextEvents = upcomingEvents.slice(0, 3)
 
   return (
@@ -79,9 +79,7 @@ export default async function HomePage({ params }: Props) {
               <h2 className="mt-2 font-serif text-3xl font-bold text-[#1a2c4e] sm:text-4xl">
                 {t('upcomingTitle')}
               </h2>
-              <p className="mt-3 max-w-xl text-base text-gray-600">
-                {t('upcomingDescription')}
-              </p>
+              <p className="mt-3 max-w-xl text-base text-gray-600">{t('upcomingDescription')}</p>
             </div>
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {nextEvents.map((event) => (

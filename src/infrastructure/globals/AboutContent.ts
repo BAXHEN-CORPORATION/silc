@@ -12,16 +12,19 @@ export const AboutContent: GlobalConfig = {
       name: 'intro',
       type: 'richText',
       label: 'What is SILC',
+      localized: true,
     },
     {
       name: 'howTheWeekWorks',
       type: 'richText',
       label: 'How the Week Works',
+      localized: true,
     },
     {
       name: 'roles',
       type: 'richText',
       label: 'Roles (Speaker, Counsellors, Intercessors)',
+      localized: true,
     },
   ],
 }
