@@ -3,6 +3,10 @@ import { getOnlineContent } from '@/application/queries/getGlobals'
 import { RegistrationCTA } from '@/components/RegistrationCTA'
 import TestimonialList from '@/components/TestimonialList'
 import RichTextRenderer from '@/components/RichTextRenderer'
+import { Fragment } from 'react'
+import { Link } from '@/i18n/navigation'
+
+const FALLBACK_VISUAL = 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=900&q=70'
 
 interface Props {
   params: Promise<{ locale: string }>
@@ -14,106 +18,292 @@ export async function generateMetadata({ params }: Props) {
   return { title: `${t('eyebrow')} – SILC` }
 }
 
+function getFeatures(locale: string) {
+  if (locale === 'en') {
+    return [
+      {
+        icon: '▶',
+        title: '32 video teachings in HD',
+        desc: 'The full SILC curriculum. Lifetime access — watch at your own pace.',
+      },
+      {
+        icon: '📖',
+        title: 'Digital workbook + physical book',
+        desc: 'Physical material shipped across Brazil. Digital version available immediately.',
+      },
+      {
+        icon: '👥',
+        title: 'Monthly live sessions',
+        desc: 'Q&A with the central team every last Saturday of the month.',
+      },
+      {
+        icon: '💬',
+        title: 'WhatsApp support',
+        desc: 'Counsellors available to pray and answer questions throughout your journey.',
+      },
+      {
+        icon: '✓',
+        title: '7-week guided track',
+        desc: 'Same structure as the 7 in-person days, spread across 7 weeks of immersion.',
+      },
+      {
+        icon: '♥',
+        title: 'Participant community',
+        desc: 'Closed prayer group with others doing SILC alongside you.',
+      },
+    ]
+  }
+  return [
+    {
+      icon: '▶',
+      title: '32 ministrações em vídeo HD',
+      desc: 'Toda a grade do SILC presencial. Acesso vitalício, assista no seu ritmo.',
+    },
+    {
+      icon: '📖',
+      title: 'Apostila digital + livro físico',
+      desc: 'Material físico enviado para todo o Brasil. Versão digital disponível imediatamente.',
+    },
+    {
+      icon: '👥',
+      title: 'Encontros mensais ao vivo',
+      desc: 'Q&A em grupo com a equipe central, todo último sábado do mês.',
+    },
+    {
+      icon: '💬',
+      title: 'Suporte por WhatsApp',
+      desc: 'Conselheiros disponíveis para orar e responder dúvidas durante seu percurso.',
+    },
+    {
+      icon: '✓',
+      title: 'Trilha guiada de 7 semanas',
+      desc: 'Mesma estrutura dos 7 dias presenciais, em 7 semanas de imersão.',
+    },
+    {
+      icon: '♥',
+      title: 'Comunidade de participantes',
+      desc: 'Grupo fechado de oração com pessoas fazendo o SILC junto com você.',
+    },
+  ]
+}
+
+function getCompareRows(locale: string) {
+  if (locale === 'en') {
+    return [
+      ['Format', '7 immersive days at a hotel', '7 weeks at your own pace'],
+      ['Personal 1:1 ministry', 'Yes — Day 4 dedicated', 'Via video call, on demand'],
+      ['Materials', 'Workbook + prayer book', 'Digital workbook + physical book shipped'],
+      ['Investment', 'From R$ 1,450', 'R$ 497 · or 6× R$ 89'],
+      ['Start', 'Fixed dates (see schedule)', 'Whenever you want — today'],
+    ]
+  }
+
+  return [
+    ['Formato', '7 dias imersivos em hotel', '7 semanas no seu ritmo'],
+    ['Ministração pessoal 1:1', 'Sim — Dia 4 dedicado', 'Por chamada de vídeo, sob demanda'],
+    ['Material', 'Apostila + livro de orações', 'Apostila digital + livro físico enviado'],
+    ['Investimento', 'A partir de R$ 1.450', 'R$ 497 · ou 6× R$ 89'],
+    ['Início', 'Datas fixas (ver agenda)', 'Quando quiser, hoje mesmo'],
+  ]
+}
+
 export default async function SilcOnlinePage({ params }: Props) {
   const { locale } = await params
   setRequestLocale(locale)
   const t = await getTranslations('Online')
 
   const content = await getOnlineContent(locale).catch(() => null)
-  const testimonials = ((content?.testimonials ?? []) as Array<{ id: string; name: string; quote: string }>)
+  const testimonials = (content?.testimonials ?? []) as Array<{
+    id: string
+    name: string
+    quote: string
+  }>
 
-  const sections = [
-    { key: 'introduction', title: t('sectionIntro') },
-    { key: 'howItWorks', title: t('sectionHow') },
-    { key: 'whatIsIncluded', title: t('sectionIncluded') },
-    { key: 'differenceFromPresencial', title: t('sectionDiff') },
+  const features = getFeatures(locale)
+  const compareRows = getCompareRows(locale)
+  const visualUrl =
+    ((content as Record<string, unknown>)?.heroImageUrl as string | undefined) ?? FALLBACK_VISUAL
+
+  const richSections = [
+    { key: 'introduction', label: t('sectionIntro') },
+    { key: 'howItWorks', label: t('sectionHow') },
+    { key: 'whatIsIncluded', label: t('sectionIncluded') },
+    { key: 'differenceFromPresencial', label: t('sectionDiff') },
   ] as const
 
   return (
     <>
-      <section className="bg-[#1a2c4e] px-6 py-24" data-testid="online-hero">
-        <div className="mx-auto max-w-[1200px]">
-          <span className="mb-4 inline-block text-xs font-semibold uppercase tracking-[0.2em] text-[#c9a84c]">
-            {t('eyebrow')}
-          </span>
-          <h1 className="font-serif text-4xl font-bold text-white sm:text-5xl">{t('title')}</h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-white/70">{t('description')}</p>
-          {content?.registrationFormUrl && (
-            <div className="mt-8 max-w-xs">
-              <RegistrationCTA href={content.registrationFormUrl as string} label={t('ctaLabel')} />
+      {/* ── HERO ── */}
+      <section className="online-hero">
+        <div className="container">
+          <div className="online-hero__inner">
+            <div>
+              <span className="eyebrow">{t('eyebrow')}</span>
+              <h1 className="display" style={{ marginTop: 20, fontSize: 'clamp(40px,5.4vw,84px)' }}>
+                {locale === 'en' ? (
+                  <>
+                    Do SILC
+                    <br />
+                    <span className="red-italic">from wherever you are.</span>
+                  </>
+                ) : (
+                  <>
+                    Faça o SILC
+                    <br />
+                    <span className="red-italic">de onde estiver.</span>
+                  </>
+                )}
+              </h1>
+              <p className="lead" style={{ marginTop: 24 }}>
+                {t('description')}
+              </p>
+              <div style={{ display: 'flex', gap: 12, marginTop: 32, flexWrap: 'wrap' }}>
+                {content?.registrationFormUrl ? (
+                  <a href="#inscricao" className="btn btn--lg">
+                    {t('heroCta')} →
+                  </a>
+                ) : null}
+                {content?.videoUrl ? (
+                  <a href="#video" className="btn btn--ghost">
+                    ▶ {t('heroCtaVideo')}
+                  </a>
+                ) : null}
+              </div>
             </div>
-          )}
+
+            <div
+              className="online-hero__visual"
+              style={{ backgroundImage: `url(${visualUrl})` }}
+              role="img"
+              aria-label={t('title')}
+            />
+          </div>
         </div>
       </section>
 
-      {(content?.format || content?.duration) && (
-        <div className="border-b bg-[#faf8f3]">
-          <div className="mx-auto flex max-w-[1200px] flex-wrap divide-x divide-gray-200">
-            {content.format && (
-              <div className="flex flex-col items-center px-10 py-6">
-                <span className="text-xs font-semibold uppercase tracking-widest text-gray-400">{t('format')}</span>
-                <span className="mt-1 text-base font-semibold text-[#1a2c4e]">{content.format}</span>
-              </div>
-            )}
-            {content.duration && (
-              <div className="flex flex-col items-center px-10 py-6">
-                <span className="text-xs font-semibold uppercase tracking-widest text-gray-400">{t('duration')}</span>
-                <span className="mt-1 text-base font-semibold text-[#1a2c4e]">{content.duration}</span>
-              </div>
-            )}
-            <div className="flex flex-col items-center px-10 py-6">
-              <span className="text-xs font-semibold uppercase tracking-widest text-gray-400">{t('access')}</span>
-              <span className="mt-1 text-base font-semibold text-[#1a2c4e]">{t('global')}</span>
+      {/* ── FEATURES ── */}
+      <section className="section">
+        <div className="container">
+          <div className="section-head" style={{ marginBottom: 40 }}>
+            <div>
+              <span className="eyebrow eyebrow--plain">{t('featuresEyebrow')}</span>
+              <h2 className="h2" style={{ marginTop: 16 }}>
+                {t('featuresTitle')}
+              </h2>
             </div>
           </div>
+          <div className="online-features">
+            {features.map((f) => (
+              <div key={f.title} className="online-feat">
+                <div className="online-feat__icon">{f.icon}</div>
+                <h4>{f.title}</h4>
+                <p>{f.desc}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      )}
+      </section>
 
-      <div className="mx-auto max-w-[800px] px-6 py-16">
-        {Boolean(content?.videoUrl) && (
-          <div className="mb-12">
-            <div className="relative aspect-video overflow-hidden rounded-xl shadow-lg">
+      {/* ── VIDEO ── */}
+      {content?.videoUrl && (
+        <section className="evd-section" id="video">
+          <div className="container">
+            <div className="detail-video__embed">
               <iframe
-                src={content!.videoUrl as string}
+                src={content.videoUrl as string}
                 allowFullScreen
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 title={t('eyebrow')}
-                className="absolute inset-0 size-full"
               />
             </div>
           </div>
-        )}
+        </section>
+      )}
 
-        {sections.map(({ key, title }) => {
-          const value = content?.[key as keyof typeof content]
-          if (!Boolean(value)) return null
-          return (
-            <section key={key} className="mb-12">
-              <div className="mb-2 h-0.5 w-12 bg-[#c9a84c]" aria-hidden="true" />
-              <h2 className="mb-4 font-serif text-2xl font-semibold text-[#1a2c4e]">{title}</h2>
-              <RichTextRenderer content={value} />
-            </section>
-          )
-        })}
-
-        {testimonials.length > 0 && (
-          <section className="mb-12">
-            <div className="mb-2 h-0.5 w-12 bg-[#c9a84c]" aria-hidden="true" />
-            <h2 className="mb-6 font-serif text-2xl font-semibold text-[#1a2c4e]">{t('sectionTestimonials')}</h2>
-            <TestimonialList testimonials={testimonials} />
+      {/* ── RICH-TEXT CMS SECTIONS ── */}
+      {richSections.map(({ key, label }) => {
+        const value = content?.[key as keyof typeof content]
+        if (!value) return null
+        return (
+          <section key={key} className="evd-section">
+            <div className="container">
+              <div className="evd-grid-aux">
+                <div>
+                  <div className="evd-label">{label}</div>
+                </div>
+                <RichTextRenderer content={value} />
+              </div>
+            </div>
           </section>
-        )}
+        )
+      })}
 
-        {content?.registrationFormUrl && (
-          <div className="rounded-2xl bg-[#1a2c4e] p-10 text-center" data-testid="registration-cta">
-            <h2 className="font-serif text-2xl font-bold text-white">{t('ctaTitle')}</h2>
-            <p className="mt-3 text-sm leading-relaxed text-white/60">{t('ctaNote')}</p>
-            <div className="mt-8 mx-auto max-w-xs">
+      {/* ── COMPARE TABLE ── */}
+      <section className="section">
+        <div className="container">
+          <div className="section-head" style={{ marginBottom: 40 }}>
+            <div>
+              <span className="eyebrow eyebrow--plain">{t('compareEyebrow')}</span>
+              <h2 className="h2" style={{ marginTop: 16 }}>
+                {t('compareTitle')}
+              </h2>
+            </div>
+            <Link href="/silc-presencial/proximos-seminarios" className="btn btn--ghost btn--sm">
+              {t('compareCta')} →
+            </Link>
+          </div>
+          <div className="compare-wrap">
+            <div className="compare">
+              <div className="col-head">&nbsp;</div>
+              <div className="col-head">{locale === 'en' ? 'In-Person' : 'Presencial'}</div>
+              <div className="col-head">Online</div>
+              {compareRows.map(([label, presencial, online]) => (
+                <Fragment key={label}>
+                  <div className="col-cell">{label}</div>
+                  <div className="col-cell">{presencial}</div>
+                  <div className="col-cell">
+                    <strong>{online}</strong>
+                  </div>
+                </Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ── */}
+      {testimonials.length > 0 && (
+        <section className="section">
+          <div className="container">
+            <div style={{ marginBottom: 40 }}>
+              <span className="eyebrow">{t('sectionTestimonials')}</span>
+            </div>
+            <TestimonialList testimonials={testimonials} />
+          </div>
+        </section>
+      )}
+
+      {/* ── REGISTRATION CTA ── */}
+      {content?.registrationFormUrl && (
+        <section className="section" id="inscricao">
+          <div className="container" style={{ maxWidth: 720 }}>
+            <div style={{ textAlign: 'center', marginBottom: 40 }}>
+              <span className="eyebrow eyebrow--plain">
+                {locale === 'en' ? 'Registration' : 'Inscrição'}
+              </span>
+              <h2 className="display" style={{ marginTop: 20, fontSize: 'clamp(36px,4.6vw,64px)' }}>
+                {t('ctaTitle')}
+              </h2>
+              <p className="lead" style={{ margin: '16px auto 0', maxWidth: '52ch' }}>
+                {t('ctaNote')}
+              </p>
+            </div>
+            <div style={{ maxWidth: 360, margin: '0 auto' }}>
               <RegistrationCTA href={content.registrationFormUrl as string} label={t('ctaLabel')} />
             </div>
           </div>
-        )}
-      </div>
+        </section>
+      )}
     </>
   )
 }

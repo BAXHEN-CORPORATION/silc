@@ -139,6 +139,10 @@
   --sidebar-accent-foreground: #E7E8EC;
   --sidebar-border:        rgba(255,255,255,0.08);
   --sidebar-ring:          #ED3A3A;
+
+  /* Hairlines */
+  --hairline:        1px solid var(--line-1);
+  --hairline-strong: 1px solid var(--line-2);
 }
 
 /* ================================================================
@@ -277,7 +281,8 @@
 
 .display .red { color: var(--red-500); }
 
-.display .red-italic {
+.display .red-italic,
+.h1 .red-italic {
   color: var(--red-500);
   font-family: var(--font-serif);
   font-style: italic;
@@ -1649,4 +1654,157 @@
   --radius-2xl:  calc(var(--radius) * 1.8);
   --radius-3xl:  calc(var(--radius) * 2.2);
   --radius-4xl:  calc(var(--radius) * 2.6);
+}
+
+/* ================================================================
+   SILC ONLINE PAGE
+   ================================================================ */
+
+.online-hero { padding: 180px 0 80px; position: relative; overflow: hidden; }
+.online-hero__inner { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; }
+@media (max-width: 1000px) { .online-hero__inner { grid-template-columns: 1fr; } }
+.online-hero__visual {
+  aspect-ratio: 1;
+  border-radius: 24px;
+  background-size: cover;
+  background-position: center;
+  border: var(--hairline);
+  position: relative;
+  overflow: hidden;
+}
+.online-hero__visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(237,58,58,0.15), rgba(143,119,224,0.15));
+}
+
+.online-features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+@media (max-width: 700px) { .online-features { grid-template-columns: 1fr; } }
+.online-feat { padding: 24px; border: var(--hairline); border-radius: 12px; background: var(--bg-2); }
+.online-feat__icon {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: rgba(237,58,58,0.15); color: var(--red-500);
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 16px; font-size: 16px;
+}
+.online-feat h4 { font-size: 16px; font-weight: 600; color: var(--fg-0); }
+.online-feat p  { font-size: 14px; color: var(--fg-2); margin-top: 8px; line-height: 1.55; }
+
+.compare-wrap { border-radius: 12px; }
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1px;
+  background: var(--line-1);
+  border: var(--hairline);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.compare > div { background: var(--bg-2); padding: 22px 24px; font-size: 14px; }
+.compare .col-head { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3); }
+.compare .col-cell { color: var(--fg-1); }
+.compare .col-cell strong { color: #fff; }
+
+@media (max-width: 640px) {
+  /* Switch to 2-col: Presencial | Online — label becomes full-width row header */
+  .compare { grid-template-columns: 1fr 1fr; }
+  /* Hide empty first header cell */
+  .compare > div:nth-child(1) { display: none; }
+  /* Every 3rd cell starting at position 4 is a row label — span full width */
+  .compare > div:nth-child(3n+4) {
+    grid-column: 1 / -1;
+    background: var(--bg-3);
+    font-weight: 600;
+    color: var(--fg-0);
+    padding: 14px 20px;
+    font-size: 13px;
+  }
+  .compare > div:not(:nth-child(3n+4)) { padding: 14px 20px; }
+}
+
+/* ================================================================
+   SURFACE
+   ================================================================ */
+
+.surface {
+  background: var(--bg-2);
+  border: var(--hairline);
+  border-radius: 16px;
+  transition: border-color 200ms ease, transform 200ms ease;
+}
+.surface:hover { border-color: var(--line-2); }
+
+/* ================================================================
+   FORM
+   ================================================================ */
+
+.form { display: grid; gap: 22px; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+
+.field label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-3);
+}
+
+.field input,
+.field textarea,
+.field select {
+  background: var(--bg-2);
+  border: var(--hairline-strong);
+  color: #fff;
+  font-family: inherit;
+  font-size: 15px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 160ms ease;
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus { border-color: var(--red-500); }
+
+.field--row { flex-direction: row; gap: 12px; }
+.field--row > * { flex: 1; }
+
+.form__success {
+  padding: 24px;
+  border: 1px solid rgba(63, 179, 127, 0.5);
+  background: rgba(63, 179, 127, 0.08);
+  border-radius: 12px;
+  color: #b3e9ce;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* Contact info icon */
+.contact-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-3);
+  border-radius: 10px;
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-bottom: 12px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  margin-top: 56px;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
 }

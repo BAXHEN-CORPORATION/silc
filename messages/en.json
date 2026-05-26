@@ -162,7 +162,14 @@
     "sectionTestimonials": "What participants say",
     "ctaTitle": "Ready to start?",
     "ctaNote": "Click below to access the registration form. After submitting, you will receive instructions about the next steps by email.",
-    "ctaLabel": "Register for SILC Online"
+    "ctaLabel": "Register for SILC Online",
+    "heroCta": "Register for SILC Online",
+    "heroCtaVideo": "Introductory video (3 min)",
+    "featuresEyebrow": "What's included",
+    "featuresTitle": "Everything from the in-person SILC, in a format for you to watch and revisit.",
+    "compareEyebrow": "Online vs In-Person",
+    "compareTitle": "Which version is for you?",
+    "compareCta": "See in-person SILCs"
   },
   "About": {
     "eyebrow": "About SILC",

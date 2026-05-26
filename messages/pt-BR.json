@@ -162,7 +162,14 @@
     "sectionTestimonials": "O que dizem os participantes",
     "ctaTitle": "Pronto para começar?",
     "ctaNote": "Clique abaixo para acessar o formulário de inscrição. Após o envio, você receberá as instruções sobre os próximos passos por e-mail.",
-    "ctaLabel": "Inscrever-se no SILC Online"
+    "ctaLabel": "Inscrever-se no SILC Online",
+    "heroCta": "Inscrever-se no SILC Online",
+    "heroCtaVideo": "Vídeo introdutório (3min)",
+    "featuresEyebrow": "O que está incluído",
+    "featuresTitle": "Tudo do SILC presencial, numa versão para você assistir e refazer.",
+    "compareEyebrow": "Online vs Presencial",
+    "compareTitle": "Qual versão é para você?",
+    "compareCta": "Ver SILCs presenciais"
   },
   "About": {
     "eyebrow": "Sobre o SILC",
