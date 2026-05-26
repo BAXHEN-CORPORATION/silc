@@ -277,9 +277,9 @@ function Nav({ route, go }) {
             SILC<span className="dot">.</span>
           </span>
           <span className="nav__brand-sub hide-mobile">
-            Seminário Intensiv
+            Seminário Intensivo
             <br />
-            de Cura e Libertação
+            de Libertação e Cura
           </span>
         </a>
 
@@ -350,7 +350,7 @@ function Footer({ go }) {
               SILC<span className="dot">.</span>
             </div>
             <p className="foot__byline">
-              Seminário Intensivo de Cura e Libertação — fundado pela Pastora Tânia Tereza, sediado
+              Seminário Intensivo de Libertação e Cura — fundado pela Pastora Tânia Tereza, sediado
               no Brasil, ministrado em todo o mundo.
             </p>
           </div>

@@ -12,8 +12,9 @@ export function generateStaticParams() {
 }
 
 export const metadata = {
-  description: 'SILC – Seminário Intensivo de Cura e Libertação. Seminários presenciais e online ao redor do mundo.',
-  title: 'SILC – Seminário Intensivo de Cura e Libertação',
+  description:
+    'SILC – Seminário Intensivo de Libertação e Cura. Seminários presenciais e online ao redor do mundo.',
+  title: 'SILC – Seminário Intensivo de Libertação e Cura',
 }
 
 interface Props {

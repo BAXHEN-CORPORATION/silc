@@ -8,7 +8,7 @@
     "about": "Sobre o SILC",
     "contact": "Contato",
     "brandSubLine1": "Seminário Intensivo",
-    "brandSubLine2": "de Cura e Libertação",
+    "brandSubLine2": "de Libertação e Cura",
     "brandAriaLabel": "SILC – Página inicial",
     "upcomingDesc": "Lista de eventos futuros, filtre por país",
     "pastDesc": "Arquivo de edições passadas com fotos",
@@ -34,7 +34,7 @@
     "viewPhoto": "Ver foto: {alt}"
   },
   "Home": {
-    "heroSince": "SEMINÁRIO INTENSIVO DE CURA E LIBERTAÇÃO · DESDE 1995",
+    "heroSince": "SEMINÁRIO INTENSIVO DE LIBERTAÇÃO E CURA · DESDE 1995",
     "heroTitle": "Cinco dias que vão <accent>transformar</accent> sua vida em Cristo.",
     "heroLead": "O SILC é um encontro intensivo — presencial ou online — onde Deus quebra ciclos, restaura famílias e cura feridas profundas. Mais de 100 mil pessoas já participaram.",
     "heroPathPresencialKind": "Caminho A · Presencial",
@@ -90,7 +90,7 @@
     "onlineQuote": "\"Transformação espiritual sem fronteiras\""
   },
   "Footer": {
-    "byline": "Seminário Intensivo de Cura e Libertação — fundado pela Pastora Tânia Tereza, sediado no Brasil, ministrado em todo o mundo.",
+    "byline": "Seminário Intensivo de Libertação e Cura — fundado pela Pastora Tânia Tereza, sediado no Brasil, ministrado em todo o mundo.",
     "tagline": "Cinco dias que vão mudar uma vida.",
     "presencial": "SILC Presencial",
     "upcoming": "Próximos Seminários",

@@ -3,14 +3,20 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback } from 'react'
 import { useTranslations } from 'next-intl'
-import { cn } from '@/lib/utils'
 
 interface CountryFilterProps {
   countries: string[]
   selectedCountry?: string
+  totalCount?: number
 }
 
-export default function CountryFilter({ countries, selectedCountry }: CountryFilterProps) {
+const COUNTRY_FLAGS: Record<string, string> = {
+  BR: '🇧🇷', PT: '🇵🇹', US: '🇺🇸', AR: '🇦🇷',
+  AO: '🇦🇴', MZ: '🇲🇿', DE: '🇩🇪', IT: '🇮🇹',
+  BE: '🇧🇪', FR: '🇫🇷', ES: '🇪🇸',
+}
+
+export default function CountryFilter({ countries, selectedCountry, totalCount }: CountryFilterProps) {
   const t = useTranslations('CountryFilter')
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -29,37 +35,25 @@ export default function CountryFilter({ countries, selectedCountry }: CountryFil
   )
 
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      <span className="text-sm font-medium text-gray-600">{t('label')}</span>
-      <div className="flex flex-wrap gap-2">
+    <div className="chips">
+      <button
+        className={`chip${!selectedCountry ? ' is-active' : ''}`}
+        onClick={() => handleSelect(null)}
+        aria-pressed={!selectedCountry}
+      >
+        {t('all')}
+        {totalCount != null && <span className="chip__count">{totalCount}</span>}
+      </button>
+      {countries.map((country) => (
         <button
-          className={cn(
-            'rounded-full px-4 py-1.5 text-sm font-medium transition-colors border',
-            !selectedCountry
-              ? 'bg-[#1a2c4e] text-white border-[#1a2c4e]'
-              : 'border-gray-200 text-gray-600 hover:border-[#1a2c4e] hover:text-[#1a2c4e]',
-          )}
-          onClick={() => handleSelect(null)}
-          aria-pressed={!selectedCountry}
+          key={country}
+          className={`chip${selectedCountry === country ? ' is-active' : ''}`}
+          onClick={() => handleSelect(country)}
+          aria-pressed={selectedCountry === country}
         >
-          {t('all')}
+          {COUNTRY_FLAGS[country] ?? ''} {country}
         </button>
-        {countries.map((country) => (
-          <button
-            key={country}
-            className={cn(
-              'rounded-full px-4 py-1.5 text-sm font-medium transition-colors border',
-              selectedCountry === country
-                ? 'bg-[#1a2c4e] text-white border-[#1a2c4e]'
-                : 'border-gray-200 text-gray-600 hover:border-[#1a2c4e] hover:text-[#1a2c4e]',
-            )}
-            onClick={() => handleSelect(country)}
-            aria-pressed={selectedCountry === country}
-          >
-            {country}
-          </button>
-        ))}
-      </div>
+      ))}
     </div>
   )
 }
